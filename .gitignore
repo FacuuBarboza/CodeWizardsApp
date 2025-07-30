@@ -1,0 +1,109 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Django migrations (mantener solo __init__.py)
+**/migrations/*
+!**/migrations/__init__.py
+
+# Static files
+/static/
+/staticfiles/
+/collected_static/
+
+# Environment variables - CRÍTICO
+.env
+.env.local
+.env.production
+.env.staging
+
+
+# Virtual environments
+informatorio/
+.informatorio/
+.venv.informatorio/
+informatorio_venv/
+.informatorio_venv/
+informatorio_env/
+informatorio_env.bak/
+informatorio_venv.bak/
+./informatorio
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing
+.tox/
+.nox/
+.coverage
+.pytest_cache/
+htmlcov/
+.coverage.*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Backup files
+*.bak
+*.backup
+*.dump
+
+# Secrets y certificados
+*.pem
+*.key
+*.crt
+secrets.json
