@@ -107,3 +107,4 @@ yarn-error.log*
 *.key
 *.crt
 secrets.json
+blog-repo/
