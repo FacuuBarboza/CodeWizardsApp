@@ -1,6 +1,6 @@
 # IMPORTANTE LEER PARA DESPLEGAR PROYECTO
 
-  [Comandos git](#explicación-comandos) | [Crear PR](#crear-pull-request) | [Configuracion Inicial](#configuración-inicial) | [Workflow](#workflow-de-desarrollo)
+  [Comandos git](#explicación-comandos) | [Crear PR](#6-crear-pull-request) | [Configuracion Inicial](#configuración-inicial) | [Workflow](#workflow-de-desarrollo)
 
 ## Blog Cultural - Informatorio 2025
 
