@@ -8,4 +8,5 @@ urlpatterns = [
     path('auth/register/', views.RegisterView.as_view(), name='auth_register'),
     path('auth/login/', views.LoginView.as_view(), name='auth_login'),
     path('auth/logout/', views.LogoutView.as_view(), name='auth_logout'),
+    path('registration-success/', views.RegistrationSuccessView.as_view(), name='registration_success'),
 ]
