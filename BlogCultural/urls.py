@@ -27,6 +27,7 @@ urlpatterns = [
     path("", index_view, name="inicio"),  # En funciones
     path("posts/", include("apps.posts.urls"), name="posts"),  # En clases
     # path("", include("apps.posts")),
+    path('accounts/', include('apps.accounts.urls')),
 ]
 
 if settings.DEBUG:
