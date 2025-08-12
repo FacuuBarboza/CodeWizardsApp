@@ -1,0 +1,63 @@
+<!-- templates/auth/auth_login.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Iniciar Sesión{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="login-container">
+            <div class="auth-header">
+                <h2>Ingresa a tu cuenta</h2>
+            </div>
+
+        <!-- Mostrar errores si los hay -->
+        {% if form.errors %}
+            <div class="alert alert-error">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+        
+        <!-- Formulario de login -->
+        <form  method="post">
+            {% csrf_token %}
+            
+            <!-- Campo usuario -->
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="field-error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- Campo contraseña -->
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="field-error">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+                    
+            <!-- Botón submit centrado -->
+            <div class="button-container">
+                <button type="submit" class="btn-login">Iniciar sesión</button>
+            </div>
+        </form>
+        
+        <!-- Enlaces adicionales -->
+            <div class="auth-links">
+                <p>¿No tienes cuenta? <a href="{% url 'accounts:auth_register' %}">Regístrate aquí</a></p>
+            </div>
+            <div class="forgot-password">
+                <a href="#">Olvidaste tu contraseña</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
