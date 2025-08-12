@@ -1,0 +1,33 @@
+
+<div class="container">
+
+    <h1>Todos los posts</h1>
+    
+    <div class="card-container">
+    {% for post in  posts %}
+        <div class="card">
+            <div class="card-img-container">
+                <img class="card-img" src="{{ post.cover_img.url }}" alt="Logo">
+            </div>
+
+            <h1 class="card-title">{{ post.title }} </h1>
+            <p class="card-content"> {{ post.content|truncatewords:15 }} </p>
+
+            <div class="line"></div>
+
+            <div class="card-info">
+                <label> Autor: {{ post.author }} </label>
+                <label>- {{ post.created_at }} </label>
+            </div>
+            <label class="label-categoria"> Categoria: {{ post.category }} </label>
+
+            <a class="card-btn" href="{% url 'posts_details' post.slug %}">Ver mas</a>
+            <a href="{% url 'posts_edit' post.slug %}">Editar</a>
+            <a href="{% url 'posts_del' post.slug %}">Eliminar</a>
+        </div>
+    {% empty %}
+        <h5>No hay posts todavia.</h5>
+    {% endfor %}
+    </div>
+
+</div>
