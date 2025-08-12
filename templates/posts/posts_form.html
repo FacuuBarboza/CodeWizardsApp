@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+
+<h1>Crear un post</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container-form">
+        <div class="form-options">
+            <label class="label-options">Imagen de portada: {{ form.cover_img }} </label>
+            <label class="label-options"> Autor: {{ form.author }}</label> 
+            <label class="label-options">Categoria: {{ form.category }}</label>
+            <label class="label-options"> Permitir cometarios: {{ form.allow_comments }} </label>
+        </div>
+        <div>
+            <label>Titulo</label>
+            {{ form.title }}
+        </div>
+
+        <div>
+            <label>Slug</label>
+            {{ form.slug }}
+        </div>
+
+        <div>
+            <label>Contenido</label>
+            {{ form.content }}
+        </div>
+
+        <button type="submit">Guardar</button>
+    </div>
+
+</form>
+
+
+
+<!-- 
+<div class="cover-container">
+    <h1 class="cover-titulo">Titulo</h1>
+    <p class="cover-intro">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam eveniet obcaecati
+        voluptate repellat laudantium amet sit molestiae ipsum aspernatur perspiciatis dolore distinctio vitae, cumque
+        quis enim ab sapiente nulla rem?</p>
+</div>
+<div class="content">
+    <h1>Titulo 1</h2>
+        <h2>Subtitulo 1</h2>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis est, sed, molestiae praesentium nemo
+            nobis dolorum assumenda sint deleniti qui repellat quam quaerat, non ipsam numquam temporibus voluptates
+            autem? Animi!</p>
+
+        <h1>Titulo 2</h2>
+            <h2>Subtitulo 1</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis est, sed, molestiae praesentium
+                nemo nobis dolorum assumenda sint deleniti qui repellat quam quaerat, non ipsam numquam temporibus
+                voluptates autem? Animi!</p>
+</div>
+<br> 
+-->
+
+{% endblock %}

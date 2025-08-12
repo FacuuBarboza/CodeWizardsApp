@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from apps.posts import views
 
 
 def index_view(request):
-    return render(request, "index.html")
+    return views.posts_lists(request)
 
 
 # def posts(request):
