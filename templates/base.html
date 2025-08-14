@@ -2,52 +2,76 @@
 
 <!doctype html>
 <html lang="es-ar">
-
 <head>
-    <title>{% block title %} Página de Inicio {% endblock title %}</title>
-    <!-- Required meta tags -->
+    <title>{% block title %}Página de Inicio{% endblock title %}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ timestamp }}" >
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon.ico' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --Mi-color: #6290c3;
+        --Mi-color2: #C2E7DA;
+        --Mi-color3: #F1FFE7;
+        --Mi-color4: #1A1B41;
+        --Mi-color5: #BAFF29;
+      }
+    </style>
 </head>
 
-<body>
-    <header class="header-navbar">
-        <a class="logo" href="#">
-            <img class="logo-img" src="{% static 'img/logo.png' %}" alt="Logo">
+<body class="bg-[var(--Mi-color3)]">
+
+<header class="bg-[var(--Mi-color2)]">
+    <nav class="px-2 py-3 flex items-center justify-between">
+        <a href="{% url 'inicio' %}" class="flex items-center">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" class="h-16 md:h-18 lg:h-20">
         </a>
 
-        <nav class="navbar-menu">
-            <ul class="menu-container">
-                <li><a class="menu-item" href="#">Mi blog</a></li>
-                <li><a class="menu-item" href="{% url 'inicio' %}">Inicio</a></li>
-                <!-- <li><a class="menu-item" href="{% url 'posts_lists' %}">Eventos</a></li> -->
-                <li><a class="menu-item" href="#">Lugares</a></li>
-                <li><a class="menu-item" href="#">Historia</a></li>
-                <li><a class="menu-item" href="#footer">Contacto</a></li>
+        <ul class="flex space-x-8 text-black font-medium">
+            <li><a href="#" class="hover:text-[var(--Mi-color)]">Mi blog</a></li>
+            <li><a href="{% url 'inicio' %}" class="hover:text-[var(--Mi-color)]">Inicio</a></li>
+            <li><a href="#" class="hover:text-[var(--Mi-color)]">Lugares</a></li>
+            <li><a href="#" class="hover:text-[var(--Mi-color)]">Historia</a></li>
+            <li><a href="#footer" class="hover:text-[var(--Mi-color)]">Contacto</a></li>
+        </ul>
+       
+        <ul class="flex space-x-4 text-black font-medium">
+            <li><a href="{% url 'accounts:auth_login' %}" class="underline hover:text-[var(--Mi-color)]">Iniciar sesión</a></li>
+            <li><a href="{% url 'accounts:auth_register' %}" class="underline hover:text-[var(--Mi-color)]">Registrarse</a></li>
+        </ul>
+    </nav>
+</header>
 
-            </ul>
+<main>
+    {% block contenido %}
+    
+    {% endblock %}
+</main>
 
-            <ul class="menu-container">
-                <li><a class="menu-item" id="item-login" href="{% url 'accounts:auth_login' %}">Iniciar sesion</a></li>
-                <!--<li><a class="menu-item" id="item-register" href="{% url 'accounts:auth_register' %}">Registrarse</a></li>-->
-            </ul>
+<footer id="footer" class="bg-gray-200 border border-blue-500 py-4">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-2">
+        <p class="text-center text-black font-semibold">Información de contacto</p>
 
-        </nav>
-        <!-- place navbar here -->
-    </header>
-    <main>
-        {% block contenido %}
-
-
-        {% endblock %}
-    </main>
-    <footer id="footer">
-        <div class="container text-center">
-            <small>Copyright &copy; Your Website</small>
+        <div class="flex justify-around w-full text-blackk">
+            <div class="flex items-center space-x-2">
+                <img src="{% static 'img/instagram.png' %}" alt="Chacocultural" class="w-8 h-8 rounded">
+                <span>Chacocultural</span>
+            </div>
+        
+            <div class="flex items-center space-x-2">
+                <img src="{% static 'img/facebook.png' %}" alt="Chacocultural" class="w-8 h-8 rounded">
+                <span>Chacocultural</span>
+            </div>
+           
+            <div class="flex items-center space-x-2">
+                <img src="{% static 'img/whatsapp.png' %}" alt="numeroDeTelefono" class="w-8 h-8 rounded">
+                <span>3624252525</span>
+            </div>
         </div>
-    </footer>
-</body>
+    </div>
+</footer>
 
+</body>
 </html>

@@ -1,0 +1,14 @@
+<h2>Resultados de búsqueda para "{{ query }}"</h2>
+
+{% if resultados %}
+    {% for modelo, queryset in resultados %}
+        <h3>{{ modelo }}</h3>
+        <ul>
+            {% for obj in queryset %}
+                <li>{{ obj }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% else %}
+    <p>No se encontraron resultados.</p>
+{% endif %}
