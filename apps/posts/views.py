@@ -3,6 +3,8 @@ from django.contrib import messages
 
 from .form import PostsForm
 from apps.posts.models import PostsModel
+from apps.comments.models import CommentsModel
+from apps.comments.form import CommetsForm
 
 
 def posts_lists(request):
@@ -12,7 +14,24 @@ def posts_lists(request):
 
 def posts_details(request, slug):
     post = get_object_or_404(PostsModel, slug=slug)
-    return render(request, "posts/posts_detail.html", {"post": post})
+    comments = post.comments.order_by("-created_at")
+    form = CommetsForm()
+
+    if request.method == "POST":
+        form = CommetsForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect("detail", slug=post.slug)
+
+    return render(
+        request,
+        "posts/posts_detail.html",
+        {"post": post, "comments": comments, "form": form},
+    )
+
+    # return render(request, "posts/posts_detail.html", {"post": post})
 
 
 def posts_create(request):

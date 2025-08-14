@@ -9,4 +9,6 @@
     <p class="post-content">{{ post.content }}</p>
 </div>
 
+{% include "comments.html" with comments=comments form=form %}
+
 {% endblock %}
