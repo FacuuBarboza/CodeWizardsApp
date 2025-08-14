@@ -1,21 +1,24 @@
-<h3>Comentarios</h3>
-{% for comment in comments %}
-    <div class="comments">
-        <strong>{{ comment.author }} </strong> dijo:
-        <p>{{ comment.content }} </p>
-        <small> {{ comment.created_at|date: "d M Y H:i" }}</small>
-    </div>
-
-{% empty %}
-    <p>No hay comentarios</P>
-
-{% endfor %}
-
 <hr>
+<div class="form-input">
+    <h3>Agregar comentarios</h3>
+    <form mothod="POST">
+        {% csrf_token %}
+        <!-- <label class="label-options"> Autor: {{ form.author }}</label> -->
+        <label class="label-options"> {{ form.content }}</label> 
+        <button type="submit">Enviar</button>
+    </form>
+</div>
 
-<h3>Agregar comentarios</h3>
-<form mothod="POST">
-    {% csrf_token %}
-    {% form.as_p %}
-    <button type="submit">Enviar</button>
-</form>
+<div>
+    <h3>Comentarios</h3>
+    {% for comment in comments %}
+        <div class="comments">
+            <strong>{{ comment.author }} </strong> dijo:
+            <p>{{ comment.content }} </p>
+            <small> {{ comment.created_at}}</small>
+        </div>
+
+    {% empty %}
+        <p>No hay comentarios</P>
+</div>
+{% endfor %}

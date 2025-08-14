@@ -9,6 +9,7 @@ class PostsForm(forms.ModelForm):
             "cover_img",
             "author",
             "category",
+            "city",
             "title",
             "slug",
             "content",
@@ -17,9 +18,12 @@ class PostsForm(forms.ModelForm):
 
         widgets = {
             "title": forms.TextInput(
-                attrs={"class": "form-input", "placeholder": "Ingrese un titulo"}),
+                attrs={"class": "form-input", "placeholder": "Ingrese un titulo"}
+            ),
             "slug": forms.TextInput(
-                attrs={"class": "form-input", "placeholder": "Ingrese un slug"}),
+                attrs={"class": "form-input", "placeholder": "Ingrese un slug"}
+            ),
             "content": forms.Textarea(
-                attrs={"class": "form-input", "placeholder": "Ingrese un contenido"}),
+                attrs={"class": "form-input", "placeholder": "Ingrese un contenido"}
+            ),
         }
