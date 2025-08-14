@@ -2,52 +2,51 @@
 
 <!doctype html>
 <html lang="es-ar">
-
 <head>
     <title>{% block title %} Página de Inicio {% endblock title %}</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ timestamp }}" >
-
+    
+    {% block extra_css %}
+    {% endblock %}
 </head>
 
 <body>
     <header class="header-navbar">
-        <a class="logo" href="#">
-            <img class="logo-img" src="{% static 'img/logo.png' %}" alt="Logo">
+        <a class="logo" href="{% url 'inicio' %}">
+            <img class="logo-img" src="{% static 'assets/chacocultural.ico' %}" alt="Logo">
         </a>
 
         <nav class="navbar-menu">
             <ul class="menu-container">
-                <li><a class="menu-item" href="#">Mi blog</a></li>
                 <li><a class="menu-item" href="{% url 'inicio' %}">Inicio</a></li>
-                <!-- <li><a class="menu-item" href="{% url 'posts_lists' %}">Eventos</a></li> -->
                 <li><a class="menu-item" href="#">Lugares</a></li>
                 <li><a class="menu-item" href="#">Historia</a></li>
                 <li><a class="menu-item" href="#footer">Contacto</a></li>
-
             </ul>
 
             <ul class="menu-container">
-                <li><a class="menu-item" id="item-login" href="{% url 'accounts:auth_login' %}">Iniciar sesion</a></li>
-                <li><a class="menu-item" id="item-register" href="{% url 'accounts:auth_register' %}">Registrarse</a></li>
+                {% if user.is_authenticated %}
+                    <li><span class="user-welcome">Hola, {{ user.username }}</span></li>
+                    <li><a class="menu-item logout-btn" href="{% url 'accounts:auth_logout' %}">Cerrar sesión</a></li>
+                {% else %}
+                    <li><a class="menu-item" href="{% url 'accounts:auth_login' %}">Iniciar sesión</a></li>
+                    <li><a class="menu-item" href="{% url 'accounts:auth_register' %}">Registrarse</a></li>
+                {% endif %}
             </ul>
-
         </nav>
-        <!-- place navbar here -->
     </header>
-    <main>
+
+    <main>   
         {% block contenido %}
-
-
         {% endblock %}
     </main>
+
     <footer id="footer">
-        <div class="container text-center">
-            <small>Copyright &copy; Your Website</small>
+        <div class="footer-container">
+            <small>Copyright &copy; Your Website 2025</small>
         </div>
     </footer>
 </body>
-
 </html>

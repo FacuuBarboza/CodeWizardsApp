@@ -1,13 +1,12 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} Registro {% endblock title %}</title>
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
-    </head>
-    <body>
+
+
+<title>{% block title %} Registro {% endblock title %}</title>
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}?v={{ timestamp }}">
+{% endblock %}
+{% block contenido %}
         <section class="register">
             <div class="auth-header">
                 <h2 class="">Crear una cuenta</h2>
@@ -63,8 +62,7 @@
         
         </section>
 
-    </body>
-    <script>
+        <script>
 
         document.addEventListener('DOMContentLoaded', function() {
             const tooltips = document.querySelectorAll('.tooltip');
@@ -85,4 +83,4 @@
             });
         });
     </script>
-</html>
+{% endblock %}

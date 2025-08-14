@@ -29,7 +29,7 @@ class LoginForm(AuthenticationForm):
         })
     )
     password = forms.CharField(
-        widget=forms.TextInput(attrs={
+        widget=forms.PasswordInput(attrs={
             'class':'form-control',
             'placeholder':'Ingresa tu contraseña'
         })

@@ -1,7 +1,8 @@
 # Create your views here.
+from django.contrib import messages
 from django.views.generic import TemplateView, CreateView
 from apps.accounts.forms import RegisterForm, LoginForm
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView as LoginViewDjango, LogoutView as LogoutViewDjango
 from django.contrib.auth import logout
@@ -15,7 +16,7 @@ class UserProfileView(TemplateView):
 class RegisterView(CreateView):
     template_name = 'auth/auth_register.html'
     form_class = RegisterForm
-    success_url = reverse_lazy('registration_sucess')
+    success_url = reverse_lazy('accounts:registration_sucess')
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -30,11 +31,28 @@ class LoginView(LoginViewDjango):
     authentication_form = LoginForm
 
     def get_success_url(self):
-        return reverse_lazy('home')
+        return reverse_lazy('inicio')
 
 
 class LogoutView(LogoutViewDjango):
-    next_page = reverse_lazy('accounts:auth_login')
+    template_name = 'auth/auth_logout.html'
+    next_page = reverse_lazy('inicio')
+    http_method_names = ['get', 'post']  # Permitir tanto GET como POST
+    
+    def get(self, request, *args, **kwargs):
+        """Mostrar página de confirmación de logout"""
+        return self.render_to_response(self.get_context_data())
+    
+    def post(self, request, *args, **kwargs):
+        """Procesar el logout"""
+        if request.user.is_authenticated:
+            messages.success(request, '¡Has cerrado sesión correctamente!')
+        return super().post(request, *args, **kwargs)
 
 class RegistrationSuccessView(TemplateView):
-    template_name = 'registration_success.html'
+    template_name = 'auth/registration_success.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Registro Exitoso'
+        return context
