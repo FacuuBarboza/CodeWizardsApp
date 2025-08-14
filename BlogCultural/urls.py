@@ -27,7 +27,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index_view, name="inicio"),  # En funciones
     path("posts/", include("apps.posts.urls"), name="posts"),  # En clases
-    # path("", include("apps.posts")),
     path('accounts/', include('apps.accounts.urls')),
     path('buscar/', views.busqueda_global, name='busqueda_global'),
     path('eventos/', views.eventos_view, name='eventos'),

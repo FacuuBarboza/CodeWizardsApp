@@ -6,8 +6,8 @@ from apps.posts.models import PostsModel
 
 
 def posts_lists(request):
-    post_lists = PostsModel.objects.all().order_by("-created_at")
-    return render(request, "index.html", {"posts": post_lists})
+    posts = PostsModel.objects.all().order_by("-created_at")
+    return render(request, "index.html", {"posts": posts})
 
 
 def posts_details(request, slug):
