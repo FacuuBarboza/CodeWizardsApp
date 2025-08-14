@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
 
 from BlogCultural.views import index_view
 
@@ -28,10 +29,16 @@ urlpatterns = [
     path("posts/", include("apps.posts.urls"), name="posts"),  # En clases
     # path("", include("apps.posts")),
     path('accounts/', include('apps.accounts.urls')),
+    path('buscar/', views.busqueda_global, name='busqueda_global'),
+    path('eventos/', views.eventos_view, name='eventos'),
+    path('lugares/', views.lugares_view, name='lugares'),
+    path('historia/', views.historia_view, name='historia'),
 ]
+
 
 if settings.DEBUG:
 
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
