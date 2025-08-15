@@ -1,65 +1,69 @@
 {% extends 'base.html' %}
- {% load static %}
-  {% block contenido %} 
-  <section class="relative h-[400px] flex flex-col items-center justify-center text-center text-white overflow-hidden"> 
-    <img src="{% static 'img/portada2.jpg' %}" alt="Vista nocturna de Chaco" 
-    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-     <div class="relative z-10 px-4">
-         <h1 class="text-4xl md:text-5xl font-bold">Bienvenidos a</h1>
-          <h2 style="font-family: 'Dancing Script', cursive;" class="text-5xl"> Chaco Cultural </h2> <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto"> 
-            ¡Bienvenidos a nuestro blog! Si quieres conocer más sobre las festividades y eventos especiales de la región, la historia de nuestra provincia Chaco, las localidades que lo integran y sus lugares turísticos, ¡estás en el lugar correcto! </p> 
-        </div>
-        </section>
-    <form method="GET" action="{% url 'busqueda_global' %}" class="flex justify-center mt-6">
-    <div class="relative w-2/3 md:w-1/2">
-        <!-- Icono de lupa -->
+{% load static %}
+
+{% block contenido %} 
+<section class="relative h-[400px] flex flex-col items-center justify-center text-center text-white overflow-hidden">
+    <img src="{% static 'img/portada2.jpg' %}" alt="Vista nocturna de Chaco"
+         class="absolute top-0 left-0 w-full h-full object-cover z-0">
+
+    <div class="relative z-10 px-4">
+        <h1 class="text-4xl md:text-5xl font-bold">Bienvenidos a</h1>
+        <h2 style="font-family: 'Dancing Script', cursive;" class="text-5xl">Chaco Cultural</h2>
+        <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto">
+            ¡Bienvenidos a nuestro blog! Si quieres conocer más sobre las festividades y eventos especiales de la región, la historia de nuestra provincia Chaco, las localidades que lo integran y sus lugares turísticos, ¡estás en el lugar correcto!
+        </p>
+    </div>
+</section>
+
+<form method="GET" action="{% url 'busqueda' %}" class="max-w-7xl mx-auto flex flex-col md:flex-row gap-3 items-center w-full my-8">
+
+    <div class="relative w-full md:w-1/3">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                       d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
             </svg>
         </div>
-        <!-- Input -->
-        <input type="text" name="q" placeholder="Busca evento o lugar..."
+        <input type="text" name="q" placeholder="Buscar en todas las publicaciones..."
                class="block w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700"
-        >
+               value="{{ request.GET.q }}">
     </div>
+
+    <select name="localidad" class="w-full md:w-1/4 px-3 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700">
+        <option value="">Todas las localidades</option>
+        {% for loc in localidades %}
+            <option value="{{ loc }}" {% if request.GET.localidad == loc %}selected{% endif %}>{{ loc }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="date" name="fecha" 
+           class="w-full md:w-1/4 px-3 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700"
+           value="{{ request.GET.fecha }}">
+
+    <button type="submit" class="bg-blue-500 text-white px-5 py-3 rounded-lg hover:bg-blue-600 shadow-sm">
+        Filtrar
+    </button>
 </form>
-<div class="flex justify-center items-center mt-10 gap-10">
-    <!-- Botón Eventos -->
-    <a href="{% url 'eventos' %}" class="flex flex-col items-center text-center">
-        <div class="w-20 h-20 rounded-full shadow-md flex items-center justify-center bg-white hover:scale-110 hover:shadow-lg transition-transform">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
-        </div>
-        <p class="mt-2 font-bold text-black">Eventos</p>
-    </a>
 
-    <!-- Botón Lugares -->
-    <a href="{% url 'lugares' %}" class="flex flex-col items-center text-center">
-        <div class="w-20 h-20 rounded-full shadow-md flex items-center justify-center bg-white hover:scale-110 hover:shadow-lg transition-transform">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="2">
-                <path d="M12 21c4.97 0 9-4.03 9-9S16.97 3 12 3 3 7.03 3 12s4.03 9 9 9z"/>
-                <path d="M12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/>
-            </svg>
+<section class="max-w-7xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-6 text-[var(--Mi-color4)]">Próximos eventos</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for evento in proximos_eventos %}
+        <div class="bg-[var(--Mi-color3)] rounded-xl shadow-md overflow-hidden hover:opacity-100 hover:shadow-lg transition-all">
+            {% if evento.cover_img %}
+                <img class="w-full h-56 object-cover" src="{{ evento.cover_img.url }}" alt="{{ evento.title }}">
+            {% endif %}
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-[var(--Mi-color4)]">{{ evento.title }}</h3>
+                <p class="text-[var(--Mi-color)] text-sm">{{ evento.content|truncatewords:12 }}</p>
+                <p class="text-xs text-gray-500 mt-2">Fecha: {{ evento.fecha_evento }}</p>
+                <p class="text-xs text-gray-500 mt-1">Localidad: {{ evento.localidad }}</p>
+            </div>
         </div>
-        <p class="mt-2 font-bold text-black">Lugares</p>
-    </a>
-
-    <!-- Botón Historia -->
-    <a href="{% url 'historia' %}" class="flex flex-col items-center text-center">
-        <div class="w-20 h-20 rounded-full shadow-md flex items-center justify-center bg-white hover:scale-110 hover:shadow-lg transition-transform">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="2">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-            </svg>
-        </div>
-        <p class="mt-2 font-bold text-black">Historia</p>
-    </a>
-</div>
+        {% empty %}
+        <p class="col-span-3 text-center text-gray-500">No hay próximos eventos.</p>
+        {% endfor %}
+    </div>
+</section>
 
 {% endblock %}
