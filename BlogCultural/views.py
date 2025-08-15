@@ -1,46 +1,83 @@
 from django.shortcuts import render
-from apps.posts import views
+from apps.posts.models import PostsModel
+from django.utils import timezone
 from django.db.models import Q
-from django.apps import apps
 
-def index_view(request):
-    return views.posts_lists(request)
+def home(request):
+    # Usamos la misma lógica del index para que el buscador funcione en inicio
+    return index(request)
 
+def index(request):
+    hoy = timezone.now().date()
 
-# def posts(request):
-#    return render(request, 'post.html') // se  borra porque en app posts ya lo creamos
-
-def busqueda_global(request):
+  
     query = request.GET.get('q', '')
-    resultados = []
+    localidad = request.GET.get('localidad', '')
+    fecha = request.GET.get('fecha', '')
+
+    posts = PostsModel.objects.all()
 
     if query:
-        
-        for model in apps.get_models():
-            
-            text_fields = [f.name for f in model._meta.get_fields() if f.get_internal_type() in ('CharField', 'TextField')]
-            
-            if text_fields:
-                
-                q_object = Q()
-                for field in text_fields:
-                    q_object |= Q(**{f"{field}__icontains": query})
-                
-                
-                queryset = model.objects.filter(q_object)
-                
-                
-                if queryset.exists():
-                    resultados.append((model.__name__, queryset))
+        posts = posts.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
+    
+    if localidad:
+        posts = posts.filter(localidad__icontains=localidad)
+    
+    if fecha:
+        posts = posts.filter(fecha_evento=fecha)
 
-    return render(request, 'busqueda.html', {'resultados': resultados, 'query': query})
+  
+    proximos_eventos = PostsModel.objects.filter(
+        fecha_evento__gte=hoy
+    ).order_by('fecha_evento')[:6]
+
+    contexto = {
+        'posts': posts,
+        'proximos_eventos': proximos_eventos,
+        'query': query,
+        'localidad': localidad,
+        'fecha': fecha,
+    }
+
+    return render(request, "index.html", contexto)
+
+def busqueda_views(request):
+    hoy = timezone.now().date()
+
+    query = request.GET.get('q', '')
+    localidad = request.GET.get('localidad', '')
+    fecha = request.GET.get('fecha', '')
+
+    resultados = PostsModel.objects.filter(fecha_evento__gte=hoy)
+
+    if query:
+        resultados = resultados.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
+
+    if localidad:
+        resultados = resultados.filter(localidad__icontains=localidad)
+
+    if fecha:
+        resultados = resultados.filter(fecha_evento=fecha)
+
+    localidades = PostsModel.objects.values_list('localidad', flat=True).distinct()
+
+    contexto = {
+        'proximos_eventos': resultados.order_by('fecha_evento'),
+        'query': query,
+        'localidad': localidad,
+        'fecha': fecha,
+        'localidades': localidades,
+    }
+
+    return render(request, 'busqueda.html', contexto)
 
 def eventos_view(request):
-    return render(request, 'eventos.html')
-
-def lugares_view(request):
-    return render(request, 'lugares.html')
+    return render(request, "eventos.html")
 
 def historia_view(request):
-    return render(request, 'historia.html')
+    return render(request, "historia.html")
 
