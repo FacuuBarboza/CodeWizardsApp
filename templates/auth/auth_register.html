@@ -2,67 +2,81 @@
 {% load static %}
 
 
-<title>{% block title %} Registro {% endblock title %}</title>
+{% block title %} Registro {% endblock title %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}?v={{ timestamp }}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}?v={{ timestamp }}">
 {% endblock %}
 {% block contenido %}
-        <section class="register">
-            <div class="auth-header">
-                <h2 class="">Crear una cuenta</h2>
-            </div>
-            
-            <form class="form-grid" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
+
+<div class="auth-register">
+    <section class="register">
+        <div class="auth-header">
+        <h2 class="">Crear una cuenta</h2>
+        </div>
+    
+        <div class="auth-form">
+        <!-- Mostrar errores si los hay -->
+        {% if form.errors %}
+            <div class="alert alert-error">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
 
                 {% for field in form %}
-                    <div class="form-group form-group-register avatar">
-                        {% if field.name == 'password1' or field.name == 'username' or field.name == 'email' or field.name == 'password2' %}
-                            <label for="{{ field.id_for_label }}" class="tooltip">
-                            {{ field.label_tag }}
-                            <span class="tooltiptext">
-                                {% if field.name == 'password1' %}
-                                    La contraseña debe tener al menos 8 caracteres y no debe ser una de las más comunes.
-                                {% elif field.name == 'username' %}
-                                    El nombre de usuario solo puede contener letras, números y los caracteres @/./+/-/_.
-                                {% elif field.name == 'email' %}
-                                    El email debe ser válido y no puede estar ya registrado.
-                                {% elif field.name == 'password2' %}
-                                    La confirmación de la contraseña debe coincidir con la contraseña.
-                                {% endif %}
-                            </span>
-                            </label>
-                        {% else %}
-                            <label for="{{ field.id_for_label }}">
-                                {{ field.label_tag }}
-                            </label>
-                        {% endif %}
-                        {{ field }}
-            
-                        {% if field.errors %}
-                        <ul class="errorlist">
-                            {% for error in field.errors %}
-                            <li class="error-message">{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                    </div>
+                    {% for error in field.errors %}
+                        <p>{{ field.label }}: {{ error }}</p>
+                    {% endfor %}
                 {% endfor %}
-                <div class="btn-register">
-                    <button type="submit" class="button-group">Registrarme</button>
-                </div>
-            </form>
-
-            <!-- Mostrar errores si los hay -->
-            {% if form.errors %}
-                <div class="alert alert-error">
-                    {{ form.errors }}
-                </div>
-            {% endif %}
+            </div>
+        {% endif %}
         
-        </section>
+        <form class="form-grid" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+    
+            
+            {% for field in form %}
+            <div class="form-group form-group-register avatar">
+                            {% if field.name == 'password1' or field.name == 'username' or field.name == 'email' or field.name == 'password2' %}
+                                <label for="{{ field.id_for_label }}" class="tooltip">
+                                {{ field.label_tag }}
+                                <span class="tooltiptext">
+                                    {% if field.name == 'password1' %}
+                                        La contraseña debe tener al menos 8 caracteres y no debe ser una de las más comunes.
+                                    {% elif field.name == 'username' %}
+                                        El nombre de usuario solo puede contener letras, números y los caracteres @/./+/-/_.
+                                    {% elif field.name == 'email' %}
+                                        El email debe ser válido y no puede estar ya registrado.
+                                    {% elif field.name == 'password2' %}
+                                        La confirmación de la contraseña debe coincidir con la contraseña.
+                                    {% endif %}
+                                </span>
+                                </label>
+                            {% else %}
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label_tag }}
+                                </label>
+                            {% endif %}
+                            {{ field }}
+                
+                            {% if field.errors %}
+                            <ul class="errorlist">
+                                {% for error in field.errors %}
+                                <li class="error-message">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="btn-register">
+                        <button type="submit" class="button-group">Registrarme</button>
+                    </div>
+                
+        </form>
+        </div>    
+    </section>
+</div>
 
-        <script>
+    <script>
 
         document.addEventListener('DOMContentLoaded', function() {
             const tooltips = document.querySelectorAll('.tooltip');

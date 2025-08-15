@@ -3,6 +3,7 @@
 :root {
    --color-fondo-primario: #f1ffe7;
    --color-fondo-secundario: #1a1b41;
+   --color-letras: #1a1b41;
    --color-fondo-terciario: #BAFF29;
    --color-input-bg: #6290c1;
    --color-input-placeholder: #4a6fa5;
@@ -192,14 +193,23 @@ body {
 
 /* Estilos para el formulario de registro */
 
+.auth-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 140px); /* Espacio para header y footer */
+    padding: 40px 20px;
+    flex: 1; /* Importante para que use todo el espacio disponible */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    height: auto;
+}
+
 .register {
     margin: auto;
     background-color: var(--color-fondo-primario);
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    height: 600px;
-    width: 800px;
 }
 
 .errorlist {
