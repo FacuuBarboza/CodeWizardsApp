@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 from BlogCultural.views import index_view
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("sistema-administracion/", admin.site.urls),
     path("", index_view, name="inicio"),  # En funciones
     path("posts/", include("apps.posts.urls"), name="posts"),  # En clases
     # path("", include("apps.posts")),
