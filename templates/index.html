@@ -49,21 +49,30 @@
     <h2 class="text-3xl font-bold mb-6 text-[var(--Mi-color4)]">Próximos eventos</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {% for evento in proximos_eventos %}
-        <div class="bg-[var(--Mi-color3)] rounded-xl shadow-md overflow-hidden hover:opacity-100 hover:shadow-lg transition-all">
-            {% if evento.cover_img %}
-                <img class="w-full h-56 object-cover" src="{{ evento.cover_img.url }}" alt="{{ evento.title }}">
+            {% if evento.id %}
+            <a href="{% url 'evento_detail' evento.id %}" class="block">
+                <div class="bg-[var(--Mi-color3)] rounded-xl shadow-md overflow-hidden hover:opacity-100 hover:shadow-lg transition-all">
+                    {% if evento.cover_img %}
+                        <img class="w-full h-56 object-cover" src="{{ evento.cover_img.url }}" alt="{{ evento.title }}">
+                    {% endif %}
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-[var(--Mi-color4)]">{{ evento.title }}</h3>
+                        <p class="text-[var(--Mi-color)] text-sm">{{ evento.content|truncatewords:12 }}</p>
+                        <p class="text-xs text-gray-500 mt-2">Fecha: {{ evento.fecha_evento }}</p>
+                        <p class="text-xs text-gray-500 mt-1">Localidad: {{ evento.localidad }}</p>
+                    </div>
+                </div>
+            </a>
+            {% else %}
+                <div class="bg-[var(--Mi-color3)] rounded-xl shadow-md p-4">
+                    <p class="text-gray-500">Evento sin información completa.</p>
+                </div>
             {% endif %}
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-[var(--Mi-color4)]">{{ evento.title }}</h3>
-                <p class="text-[var(--Mi-color)] text-sm">{{ evento.content|truncatewords:12 }}</p>
-                <p class="text-xs text-gray-500 mt-2">Fecha: {{ evento.fecha_evento }}</p>
-                <p class="text-xs text-gray-500 mt-1">Localidad: {{ evento.localidad }}</p>
-            </div>
-        </div>
         {% empty %}
-        <p class="col-span-3 text-center text-gray-500">No hay próximos eventos.</p>
+            <p class="col-span-3 text-center text-gray-500">No hay próximos eventos.</p>
         {% endfor %}
     </div>
 </section>
+
 
 {% endblock %}

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from apps.posts.models import PostsModel
 from django.utils import timezone
 from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
+
 
 def home(request):
     # Usamos la misma lógica del index para que el buscador funcione en inicio
@@ -83,6 +85,9 @@ def busqueda_views(request):
 
     return render(request, 'busqueda.html', contexto)
 
+def lugares_view(request):
+    return render(request, 'lugares.html')
+
 def eventos_view(request):
     return render(request, "eventos.html")
 
@@ -90,4 +95,8 @@ def historia_view(request):
     return render(request, "historia.html")
 
 def nosotros_view(request):
-    return render(request, "BlogCultural/nosotros.html")
+    return render(request, "nosotros.html")
+
+def evento_detail(request, id):
+    evento = get_object_or_404(PostsModel, id=id)
+    return render(request, "evento_detail.html", {"evento": evento})

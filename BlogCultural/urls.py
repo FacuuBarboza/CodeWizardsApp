@@ -11,9 +11,11 @@ urlpatterns = [
     path("posts/", include("apps.posts.urls")),
     path("accounts/", include("apps.accounts.urls")),
     path('buscar/', views.busqueda_views, name='busqueda'),
-    path('eventos/', views.eventos_view, name='eventos'),
+    path('lugares/', views.lugares_view, name='lugares'),
     path('historia/', views.historia_view, name='historia'),
     path('nosotros/', views.nosotros_view, name='nosotros'),
+   path('eventos/<uuid:id>/', views.evento_detail, name='evento_detail'),
+
 ]
 
 if settings.DEBUG:
