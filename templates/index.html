@@ -1,9 +1,69 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Index{% endblock %}
+{% block contenido %} 
+<section class="relative h-[400px] flex flex-col items-center justify-center text-center text-white overflow-hidden">
+    <img src="{% static 'img/portada2.jpg' %}" alt="Vista nocturna de Chaco"
+         class="absolute top-0 left-0 w-full h-full object-cover z-0">
 
-{% block contenido %}
+    <div class="relative z-10 px-4">
+        <h1 class="text-4xl md:text-5xl font-bold">Bienvenidos a</h1>
+        <h2 style="font-family: 'Dancing Script', cursive;" class="text-5xl">Chaco Cultural</h2>
+        <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto">
+            ¡Bienvenidos a nuestro blog! Si quieres conocer más sobre las festividades y eventos especiales de la región, la historia de nuestra provincia Chaco, las localidades que lo integran y sus lugares turísticos, ¡estás en el lugar correcto!
+        </p>
+    </div>
+</section>
 
-    {% include "posts/posts_lists.html" %}
+<form method="GET" action="{% url 'busqueda' %}" class="max-w-7xl mx-auto flex flex-col md:flex-row gap-3 items-center w-full my-8">
+
+    <div class="relative w-full md:w-1/3">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+            </svg>
+        </div>
+        <input type="text" name="q" placeholder="Buscar en todas las publicaciones..."
+               class="block w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700"
+               value="{{ request.GET.q }}">
+    </div>
+
+    <select name="localidad" class="w-full md:w-1/4 px-3 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700">
+        <option value="">Todas las localidades</option>
+        {% for loc in localidades %}
+            <option value="{{ loc }}" {% if request.GET.localidad == loc %}selected{% endif %}>{{ loc }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="date" name="fecha" 
+           class="w-full md:w-1/4 px-3 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700"
+           value="{{ request.GET.fecha }}">
+
+    <button type="submit" class="bg-blue-500 text-white px-5 py-3 rounded-lg hover:bg-blue-600 shadow-sm">
+        Filtrar
+    </button>
+</form>
+
+<section class="max-w-7xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-6 text-[var(--Mi-color4)]">Próximos eventos</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for evento in proximos_eventos %}
+        <div class="bg-[var(--Mi-color3)] rounded-xl shadow-md overflow-hidden hover:opacity-100 hover:shadow-lg transition-all">
+            {% if evento.cover_img %}
+                <img class="w-full h-56 object-cover" src="{{ evento.cover_img.url }}" alt="{{ evento.title }}">
+            {% endif %}
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-[var(--Mi-color4)]">{{ evento.title }}</h3>
+                <p class="text-[var(--Mi-color)] text-sm">{{ evento.content|truncatewords:12 }}</p>
+                <p class="text-xs text-gray-500 mt-2">Fecha: {{ evento.fecha_evento }}</p>
+                <p class="text-xs text-gray-500 mt-1">Localidad: {{ evento.localidad }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="col-span-3 text-center text-gray-500">No hay próximos eventos.</p>
+        {% endfor %}
+    </div>
+</section>
 
 {% endblock %}
