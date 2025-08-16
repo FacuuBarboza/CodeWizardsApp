@@ -13,7 +13,6 @@ media/
 !**/migrations/__init__.py
 
 # Static files
-/static/
 /staticfiles/
 /collected_static/
 

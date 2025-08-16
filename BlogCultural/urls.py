@@ -6,7 +6,7 @@ from BlogCultural import views
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("sistema-administracion/", admin.site.urls),
     path("", views.home, name="inicio"),
     path("posts/", include("apps.posts.urls")),
     path("accounts/", include("apps.accounts.urls")),

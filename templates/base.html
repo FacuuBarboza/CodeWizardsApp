@@ -22,56 +22,64 @@
 </head>
 
 <body class="bg-[var(--Mi-color3)]">
+    <header class="bg-[var(--Mi-color2)]">
+        <nav class="px-2 py-3 flex items-center justify-between">
+            <a href="{% url 'inicio' %}" class="flex items-center">
+                <img src="{% static 'img/logo.png' %}" alt="Logo" class="h-16 md:h-18 lg:h-20">
+            </a>
 
-<header class="bg-[var(--Mi-color2)]">
-    <nav class="px-2 py-3 flex items-center justify-between">
-        <a href="{% url 'inicio' %}" class="flex items-center">
-            <img src="{% static 'img/logo.png' %}" alt="Logo" class="h-16 md:h-18 lg:h-20">
-        </a>
+            <ul class="flex space-x-8 text-black font-medium">
+                <li><a href="#" class="hover:text-[var(--Mi-color)]">Mi blog</a></li>
+                <li><a href="{% url 'inicio' %}" class="hover:text-[var(--Mi-color)]">Inicio</a></li>
+                <li><a href="#" class="hover:text-[var(--Mi-color)]">Lugares</a></li>
+                <li><a href="#" class="hover:text-[var(--Mi-color)]">Historia</a></li>
+                <li><a href="#footer" class="hover:text-[var(--Mi-color)]">Contacto</a></li>
+            </ul>
 
-        <ul class="flex space-x-8 text-black font-medium">
-            <li><a href="#" class="hover:text-[var(--Mi-color)]">Mi blog</a></li>
-            <li><a href="{% url 'inicio' %}" class="hover:text-[var(--Mi-color)]">Inicio</a></li>
-            <li><a href="#" class="hover:text-[var(--Mi-color)]">Lugares</a></li>
-            <li><a href="#" class="hover:text-[var(--Mi-color)]">Historia</a></li>
-            <li><a href="#footer" class="hover:text-[var(--Mi-color)]">Contacto</a></li>
-        </ul>
-       
-        <ul class="flex space-x-4 text-black font-medium">
-            <li><a href="{% url 'accounts:auth_login' %}" class="underline hover:text-[var(--Mi-color)]">Iniciar sesión</a></li>
-            <li><a href="{% url 'accounts:auth_register' %}" class="underline hover:text-[var(--Mi-color)]">Registrarse</a></li>
-        </ul>
-    </nav>
-</header>
+            <ul class="flex space-x-4 text-black font-medium">
+                {% if user.is_authenticated %}
+                <li><span class="user-welcome">Hola, {{ user.username }}</span></li>
+                {% if user.is_superuser %}
+                <li><a class="menu-item" href="{% url 'accounts:admin_panel' %}">Ir a panel de admin</a></li>
+                {% endif %}
+                <li><a class="menu-item logout-btn" href="{% url 'accounts:profile' %}">Ver Perfil</a></li>
+                <li><a class="menu-item logout-btn" href="{% url 'accounts:auth_logout' %}">Cerrar sesión</a></li>
+                {% else %}
+                <li><a class="menu-item" href="{% url 'accounts:auth_login' %}">Iniciar sesión</a></li>
+                <li><a class="menu-item" href="{% url 'accounts:auth_register' %}">Registrarse</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
 
-<main>
-    {% block contenido %}
-    
-    {% endblock %}
-</main>
+    <main>
+        {% block contenido %}
 
-<footer id="footer" class="bg-gray-200 border border-blue-500 py-4">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-2">
-        <p class="text-center text-black font-semibold">Información de contacto</p>
+        {% endblock %}
+    </main>
 
-        <div class="flex justify-around w-full text-blackk">
-            <div class="flex items-center space-x-2">
-                <img src="{% static 'img/instagram.png' %}" alt="Chacocultural" class="w-8 h-8 rounded">
-                <span>Chacocultural</span>
-            </div>
-        
-            <div class="flex items-center space-x-2">
-                <img src="{% static 'img/facebook.png' %}" alt="Chacocultural" class="w-8 h-8 rounded">
-                <span>Chacocultural</span>
-            </div>
-           
-            <div class="flex items-center space-x-2">
-                <img src="{% static 'img/whatsapp.png' %}" alt="numeroDeTelefono" class="w-8 h-8 rounded">
-                <span>3624252525</span>
+    <footer id="footer" class="bg-gray-200 border border-blue-500 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-2">
+            <p class="text-center text-black font-semibold">Información de contacto</p>
+
+            <div class="flex justify-around w-full text-blackk">
+                <div class="flex items-center space-x-2">
+                    <img src="{% static 'img/instagram.png' %}" alt="Chacocultural" class="w-8 h-8 rounded">
+                    <span>Chacocultural</span>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <img src="{% static 'img/facebook.png' %}" alt="Chacocultural" class="w-8 h-8 rounded">
+                    <span>Chacocultural</span>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <img src="{% static 'img/whatsapp.png' %}" alt="numeroDeTelefono" class="w-8 h-8 rounded">
+                    <span>3624252525</span>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
 </body>
 </html>

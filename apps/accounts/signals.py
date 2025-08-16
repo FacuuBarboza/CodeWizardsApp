@@ -1,12 +1,12 @@
 # from django.contrib.auth.models import Permission, Group
 # from django.contrib.contenttypes.models import ContentType
 # from apps.posts.models import Post, Comment
-# from apps.accounts.models import Profile
+# from apps.accounts.models import User
 # from django.dispatch import receiver
 # from django.db.models.signals import post_save
 
 
-# @receiver(post_save, sender=Profile)
+# @receiver(post_save, sender=User)
 # def create_groups_and_permissions(sender, instance, created, **kwargs):
 #     if created and instance.is_superuser:
 #         try:
