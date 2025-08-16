@@ -10,7 +10,6 @@ def home(request):
 def index(request):
     hoy = timezone.now().date()
 
-  
     query = request.GET.get('q', '')
     localidad = request.GET.get('localidad', '')
     fecha = request.GET.get('fecha', '')
@@ -21,17 +20,25 @@ def index(request):
         posts = posts.filter(
             Q(title__icontains=query) | Q(content__icontains=query)
         )
-    
+
     if localidad:
         posts = posts.filter(localidad__icontains=localidad)
-    
+
     if fecha:
         posts = posts.filter(fecha_evento=fecha)
 
-  
     proximos_eventos = PostsModel.objects.filter(
         fecha_evento__gte=hoy
     ).order_by('fecha_evento')[:6]
+
+    localidades = (
+        PostsModel.objects
+        .filter(localidad__isnull=False)
+        .exclude(localidad__exact='')
+        .values_list('localidad', flat=True)
+        .distinct()
+        .order_by('localidad')
+    )
 
     contexto = {
         'posts': posts,
@@ -39,6 +46,7 @@ def index(request):
         'query': query,
         'localidad': localidad,
         'fecha': fecha,
+        'localidades': localidades,
     }
 
     return render(request, "index.html", contexto)
@@ -81,3 +89,5 @@ def eventos_view(request):
 def historia_view(request):
     return render(request, "historia.html")
 
+def nosotros_view(request):
+    return render(request, "BlogCultural/nosotros.html")
