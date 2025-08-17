@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 import uuid
+from django.contrib.auth.models import User
 
 class Category:
     TITLE = {
@@ -14,11 +15,24 @@ class Category:
         "7": "Otros",
     }
 
+class City:
+    TITLE = {
+        "1": "Resistencia",
+        "2": "Fontana",
+        "3": "Saens Peña",
+        "4": "Quitilipi",
+        "5": "Villa Berthet",
+        "6": "Samuhu",
+        "7": "Otros",
+    }
+
 class PostsModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.CharField(max_length=50, choices=Category.TITLE, default="Otros")
+    city = models.CharField(max_length=50, choices=City.TITLE, default="Otros")
+    title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, max_length=200, blank=True)
     content = models.TextField(max_length=10000)
     created_at = models.DateTimeField(default=timezone.now)

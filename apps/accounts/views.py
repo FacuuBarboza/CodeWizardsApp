@@ -14,6 +14,9 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views import View
 from django.utils.decorators import method_decorator
 
+
+class UserProfileView(TemplateView):
+    template_name = "accounts/user_profile.html"
  
 def is_superuser(user):
     return user.is_superuser
@@ -60,13 +63,12 @@ class UserProfileEditView(LoginRequiredMixin, UpdateView):
         return context
 
 class RegisterView(CreateView):
-    template_name = 'auth/auth_register.html'
+    template_name = "auth/auth_register.html"
     form_class = RegisterForm
     success_url = reverse_lazy('inicio')
 
     def form_valid(self, form):
         response = super().form_valid(form)
-
         # Asegurar que el usuario NO tenga permisos de staff
         self.object.is_staff = False
         self.object.is_superuser = False
@@ -79,8 +81,9 @@ class RegisterView(CreateView):
 
         return response
 
+
 class LoginView(LoginViewDjango):
-    template_name = 'auth/auth_login.html'
+    template_name = "auth/auth_login.html"
     authentication_form = LoginForm
 
     def get_success_url(self):

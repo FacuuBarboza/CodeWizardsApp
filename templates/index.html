@@ -28,6 +28,7 @@
                class="block w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700"
                value="{{ request.GET.q }}">
     </div>
+    
 
     <select name="localidad" class="w-full md:w-1/4 px-3 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700">
         <option value="">Todas las localidades</option>
@@ -74,5 +75,7 @@
     </div>
 </section>
 
+{% include "posts/posts_lists.html" %}
 
 {% endblock %}
+
