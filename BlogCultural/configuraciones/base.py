@@ -48,6 +48,8 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "middleware.SeparateAdminAuthMiddleware",
+    "middleware.HideAdminMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -115,6 +117,17 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+]
+
+ADMIN_ENABLED = True
+
+# Configurar sesiones separadas
+SESSION_COOKIE_NAME = 'sessionid_web'  # Para tu aplicación web
+ADMIN_SESSION_COOKIE_NAME = 'sessionid_admin'  # Para admin
+
+# Configurar contextos de autenticación separados
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Para ambos
 ]
 
 AUTH_USER_MODEL = "accounts.User"

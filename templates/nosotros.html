@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %}
+<section class="max-w-5xl mx-auto px-4 py-10 text-lg text-gray-800 leading-relaxed">
+    
+  <h1 class="text-4xl font-bold mb-6 text-[var(--Mi-color)]">Quiénes Somos</h1>
+  <div class="flex justify-center mb-6">
+    <img src="{% static 'img/devops-benefits.jpg' %}" alt="Nuestro equipo" class="rounded-lg shadow-lg w-64 h-auto">
+  </div>
+
+  <p class="mb-6">
+    Este sitio web es el resultado de un proyecto final desarrollado por un equipo de participantes del <strong>Informatorio</strong>, un programa de formación intensiva en tecnologías digitales...
+  </p>
+
+  <p class="mb-6">
+    Nuestro principal objetivo fue crear un espacio digital que contribuya a la <strong>promoción de la cultura local</strong>, facilitando el acceso a información sobre eventos...
+  </p>
+
+  <p class="mb-6">
+    El desarrollo de este proyecto nos permitió aplicar de forma práctica todo lo aprendido...
+  </p>
+
+  <p class="mb-6">
+    El grupo está conformado por <strong>Adrián</strong>, <strong>Facundo</strong> y <strong>Debora</strong>...
+  </p>
+
+  <p>
+    Este proyecto es más que una entrega final: es una muestra de lo que podemos lograr...
+  </p>
+</section>
+{% endblock %}

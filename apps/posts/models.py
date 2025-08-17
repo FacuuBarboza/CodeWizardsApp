@@ -1,14 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-from django.utils.text import slugify
-from django.urls import reverse
 import uuid
 from django.contrib.auth.models import User
-
-# from PIL import Image as PilImage
-import os
-
 
 class Category:
     TITLE = {
@@ -21,7 +15,6 @@ class Category:
         "7": "Otros",
     }
 
-
 class City:
     TITLE = {
         "1": "Resistencia",
@@ -33,10 +26,9 @@ class City:
         "7": "Otros",
     }
 
-
 class PostsModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    cover_img = models.ImageField(default="cover/cover_default.jpg", upload_to="cover/")
+    title = models.CharField(max_length=200)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.CharField(max_length=50, choices=Category.TITLE, default="Otros")
     city = models.CharField(max_length=50, choices=City.TITLE, default="Otros")
@@ -46,12 +38,12 @@ class PostsModel(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     allow_comments = models.BooleanField(default=True)
+    fecha_evento = models.DateField(null=True, blank=True)  
+    localidad = models.CharField(max_length=100, blank=True, null=True)  
+    cover_img = models.ImageField(default="cover/cover_default.jpg", upload_to="cover/")
 
     def __str__(self):
         return self.title
 
     # def get_absolute_url(self):
     #     return reverse("posts_detail", kwargs={"pk": self.pk})
-
-
-# Create your models here.
