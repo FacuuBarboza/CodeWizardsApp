@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.urls import reverse
 import uuid
+from django.contrib.auth.models import User
 
 # from PIL import Image as PilImage
 import os

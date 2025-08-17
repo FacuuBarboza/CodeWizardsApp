@@ -1,24 +1,50 @@
-<hr>
-<div class="form-input">
-    <h3>Agregar comentarios</h3>
-    <form mothod="POST">
-        {% csrf_token %}
-        <!-- <label class="label-options"> Autor: {{ form.author }}</label> -->
-        <label class="label-options"> {{ form.content }}</label> 
-        <button type="submit">Enviar</button>
-    </form>
-</div>
-
-<div>
-    <h3>Comentarios</h3>
-    {% for comment in comments %}
-        <div class="comments">
-            <strong>{{ comment.author }} </strong> dijo:
-            <p>{{ comment.content }} </p>
-            <small> {{ comment.created_at}}</small>
+{% if user.is_authenticated %}   
+    <hr>
+    {% if post.allow_comments %}
+        <div class="container-new-comments">
+            <div class="container-form">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {{ form.content }}
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
         </div>
 
-    {% empty %}
-        <p>No hay comentarios</P>
-</div>
-{% endfor %}
+        <div class="container-comments">
+            <h3><strong>Comentarios: {{ post.comments.count }}</strong></h3>
+            <div class="comments">
+                {% for comment in comments %}
+                    
+                        <label><strong>{{ comment.user }} </strong> dijo:</label>
+                        <p>{{ comment.content }} </p>
+                        <small> {{ comment.created_at}}</small>
+                        <hr>
+                    
+                {% empty %}
+                    <p>No hay comentarios</P>
+                {% endfor %}
+            </div>
+        </div>
+        
+
+        <!-- Navegación de páginas -->
+        <div class="pagination">
+            {% if comments.has_previous %}
+                <a class="arrow-pagination" href="?page={{ comments.previous_page_number }}"> << Anterior </a>
+            {% endif %}
+
+            <span><strong>Página {{ comments.number }} de {{ comments.paginator.num_pages }}</strong></span>
+
+            {% if comments.has_next %}
+                <a class="arrow-pagination" href="?page={{ comments.next_page_number }}">Siguiente >></a>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <h3>El autor del post desactivo los comentarios</h3>
+
+    {% endif %}
+
+{% endif %}

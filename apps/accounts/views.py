@@ -18,7 +18,7 @@ class UserProfileView(TemplateView):
 class RegisterView(CreateView):
     template_name = "auth/auth_register.html"
     form_class = RegisterForm
-    success_url = reverse_lazy("/")
+    success_url = reverse_lazy("")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -34,7 +34,7 @@ class LoginView(LoginViewDjango):
     authentication_form = LoginForm
 
     def get_success_url(self):
-        return reverse_lazy("/")
+        return reverse_lazy("")
 
 
 class LogoutView(LogoutViewDjango):
