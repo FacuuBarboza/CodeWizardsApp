@@ -15,11 +15,6 @@
 }
 
 /* Reset y estructura base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     font-family: 'Sen', sans-serif;
@@ -31,6 +26,9 @@ body {
     padding: 0;
 }
 
+.user-welcome-base {
+    color: black;
+}
 /* Header fijo */
 .header-navbar {
     position: fixed;
@@ -80,10 +78,6 @@ body {
 
 /* Main content */
 main {
-    flex: 1; /* Esto hace que el main ocupe todo el espacio disponible */
-    display: flex;
-    margin-top: 70px; /* Altura del header */
-    padding: 0 5px 0 5px;
     min-height: calc(100vh - 140px);
     width: 100%; /* 70px header + 70px footer */
 }
