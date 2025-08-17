@@ -4,6 +4,7 @@ from django.utils import timezone
 import uuid
 from django.contrib.auth.models import User
 
+
 class Category:
     TITLE = {
         "1": "Deporte",
@@ -15,6 +16,7 @@ class Category:
         "7": "Otros",
     }
 
+
 class City:
     TITLE = {
         "1": "Resistencia",
@@ -25,6 +27,7 @@ class City:
         "6": "Samuhu",
         "7": "Otros",
     }
+
 
 class PostsModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -38,8 +41,10 @@ class PostsModel(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     allow_comments = models.BooleanField(default=True)
-    fecha_evento = models.DateField(null=True, blank=True)  
-    localidad = models.CharField(max_length=100, blank=True, null=True)  
+    fecha_evento = models.DateField(null=True, blank=True)
+    localidad = models.CharField(
+        max_length=100, choices=City.TITLE, blank=True, null=True
+    )
     cover_img = models.ImageField(default="cover/cover_default.jpg", upload_to="cover/")
 
     def __str__(self):

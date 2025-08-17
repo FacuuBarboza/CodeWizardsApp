@@ -1,9 +1,11 @@
 
 <div class="container">
 
-    <h1>Todos los posts</h1>
+    <h2 class="text-3xl font-bold mb-6 text-[var(--Mi-color4)]">Próximos eventos</h2>
     
     <div class="card-container">
+               
+
     {% for post in  posts %}
         <div class="card">
             <div class="card-img-container">
@@ -21,7 +23,7 @@
             </div>
             <label class="label-categoria"> Categoria: {{ post.category }} </label>
 
-            <a class="card-btn" href="{% url 'posts_details' post.slug %}">Ver>> </a>
+            <a class="inline-flex items-center mt-4 font-semibold text-blue-600 lg:mb-0 hover:text-neutral-600" href="{% url 'posts_details' post.slug %}">Ver>> </a>
             <a href="{% url 'posts_edit' post.slug %}">Editar</a>
             <a href="{% url 'posts_del' post.slug %}">Eliminar</a>
         </div>

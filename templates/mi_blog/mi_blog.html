@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %} 
+
+    
+    <div class="container">
+
+        <h2 class="text-3xl font-bold mb-6 text-[var(--Mi-color4)]">Próximos eventos</h2>
+        
+        <div class="card-container">
+                
+            {% for post in  posts %}
+                <div class="card">
+                    <div class="card-img-container">
+                        <img class="card-img" src="{{ post.cover_img.url }}" alt="Logo">
+                    </div>
+
+                    <h1 class="card-title">{{ post.title }} </h1>
+                    <p class="card-content"> {{ post.content|truncatewords:15 }} </p>
+
+                    <hr>
+
+                    <div class="card-info">
+                        <label> Autor: {{ post.author }} </label>
+                        <label>- {{ post.created_at }} </label>
+                    </div>
+                    <label class="label-categoria"> Categoria: {{ post.category }} </label>
+
+                    <a class="inline-flex items-center mt-4 font-semibold text-blue-600 lg:mb-0 hover:text-neutral-600" href="{% url 'posts_details' post.slug %}">Ver>> </a>
+                    <a href="{% url 'posts_edit' post.slug %}">Editar</a>
+                    <a href="{% url 'posts_del' post.slug %}">Eliminar</a>
+                </div>
+            {% empty %}
+                <h5>No hay posts todavia.</h5>
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+{% endblock %}
