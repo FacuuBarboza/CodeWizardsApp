@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils import timezone
 import uuid
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 class Category:
     TITLE = {
@@ -11,7 +12,7 @@ class Category:
         "3": "Aviso",
         "4": "Religion",
         "5": "Fiesta",
-        "6": "Invitacio",
+        "6": "Invitacion",
         "7": "Otros",
     }
 
@@ -32,7 +33,6 @@ class PostsModel(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.CharField(max_length=50, choices=Category.TITLE, default="Otros")
     city = models.CharField(max_length=50, choices=City.TITLE, default="Otros")
-    title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, max_length=200, blank=True)
     content = models.TextField(max_length=10000)
     created_at = models.DateTimeField(default=timezone.now)
@@ -44,6 +44,28 @@ class PostsModel(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def likes_count(self):
+        return self.likes.count()
+    
+    def user_has_liked(self, user):
+        if user.is_authenticated:
+            return self.likes.filter(user=user).exists()
+        return False
 
     # def get_absolute_url(self):
     #     return reverse("posts_detail", kwargs={"pk": self.pk})
+
+User = get_user_model()
+
+class PostLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey('PostsModel', on_delete=models.CASCADE, related_name='likes')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('user', 'post')
+        
+    def __str__(self):
+        return f'{self.user.username} likes {self.post.title}'
+

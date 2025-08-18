@@ -15,11 +15,6 @@
 }
 
 /* Reset y estructura base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     font-family: 'Sen', sans-serif;
@@ -31,6 +26,9 @@ body {
     padding: 0;
 }
 
+.user-welcome-base {
+    color: black;
+}
 /* Header fijo */
 .header-navbar {
     position: fixed;
@@ -80,10 +78,6 @@ body {
 
 /* Main content */
 main {
-    flex: 1; /* Esto hace que el main ocupe todo el espacio disponible */
-    display: flex;
-    margin-top: 70px; /* Altura del header */
-    padding: 0 5px 0 5px;
     min-height: calc(100vh - 140px);
     width: 100%; /* 70px header + 70px footer */
 }
@@ -164,6 +158,41 @@ main {
     opacity: 0.9;
 }
 
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Transiciones suaves */
+.transition-colors {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.transition-transform {
+    transition: transform 0.3s ease;
+}
+
+.transition-shadow {
+    transition: box-shadow 0.3s ease;
+}
+
+/* Efectos hover mejorados */
+.hover\:scale-105:hover {
+    transform: scale(1.05);
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .header-navbar {
@@ -208,6 +237,17 @@ main {
 
     .footer-container small {
         font-size: 12px;
+    }
+
+    .max-w-7xl form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .max-w-7xl form > div,
+    .max-w-7xl form > select,
+    .max-w-7xl form > input {
+        width: 100%;
     }
 
 }

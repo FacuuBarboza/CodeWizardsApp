@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="icon" type="image/png" href="{% static 'assets/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.3">
+    
 
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
 
@@ -21,11 +21,17 @@
         --Mi-color5: #BAFF29;
       }
     </style>
+    {% block extracss %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.3">
+        <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.3">
+        <link rel="stylesheet" href="{% static 'css/logout.css' %}?v=1.3">
+        <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=1.3">
+    {% endblock %}
 </head>
 
 <body class="bg-[var(--Mi-color3)]">
 
-<header class="bg-[var(--Mi-color2)]">
+<header class="bg-[var(--Mi-color2)]" style="width: 100%;">
     <nav class="px-2 py-3 flex items-center justify-between">
         <a href="{% url 'inicio' %}" class="flex items-center">
             <img src="{% static 'img/logo.png' %}" alt="Logo" class="h-16 md:h-18 lg:h-20">
@@ -33,15 +39,25 @@
 
         <ul class="flex space-x-8 text-black font-medium">
             <li><a href="{% url 'inicio' %}" class="hover:text-[var(--Mi-color)]">Inicio</a></li>
-            <li><a href="eventos.html" class="hover:text-[var(--Mi-color)]">Eventos</a></li>
-            <li><a href="lugares.html" class="hover:text-[var(--Mi-color)]">Lugares</a></li>
-            <li><a href="historia.html" class="hover:text-[var(--Mi-color)]">Historia</a></li>
-            <li><a href="nosotros.html" class="hover:text-[var(--Mi-color)]">Nosotros</a></li>
+            <li><a href="{% url 'lugares' %}" class="hover:text-[var(--Mi-color)]">Lugares</a></li>
+            <li><a href="{% url 'historia' %}" class="hover:text-[var(--Mi-color)]">Historia</a></li>
+            <li><a href="{% url 'nosotros' %}" class="hover:text-[var(--Mi-color)]">Nosotros</a></li>
         </ul>
        
         <ul class="flex space-x-4 text-black font-medium">
-            <li><a href="{% url 'accounts:auth_login' %}" class="underline hover:text-[var(--Mi-color)]">Iniciar sesión</a></li>
-            <li><a href="{% url 'accounts:auth_register' %}" class="underline hover:text-[var(--Mi-color)]">Registrarse</a></li>
+
+            {% if  user.is_authenticated %}
+                <li><span class="user-welcome-base">Hola, {{ user.username }}</span></li>
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'accounts:admin_panel' %}" class="underline hover:text-[var(--Mi-color)]">Ir a panel de admin</a></li>
+                {% endif %}
+
+                <li><a href="{% url 'accounts:profile' %}" class="underline hover:text-[var(--Mi-color)]">Ver Perfil</a></li>
+                <li><a href="{% url 'accounts:auth_logout' %}" class="underline hover:text-[var(--Mi-color)]">Cerrar Sesión</a></li>
+            {% else %}
+                <li><a href="{% url 'accounts:auth_login' %}" class="underline hover:text-[var(--Mi-color)]">Iniciar sesión</a></li>
+                <li><a href="{% url 'accounts:auth_register' %}" class="underline hover:text-[var(--Mi-color)]">Registrarse</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>
