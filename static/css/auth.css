@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap');
+
+:root {
+   --color-fondo-primario: #f1ffe7;
+   --color-fondo-secundario: #1a1b41;
+   --color-letras: #1a1b41;
+   --color-fondo-terciario: #BAFF29;
+   --color-input-bg: #6290c1;
+   --color-input-placeholder: #4a6fa5;
+   --color-link: #4a6fa5; 
+   --font-primary: 'Sen', sans-serif;
+   --border-radius: 8px;
+   --espaciado-sm: 8px;
+   --espaciado-md: 16px;
+   --espaciado-lg: 24px;
+}
+
+body {
+    font-family: var(--font-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 140px); /* Espacio para header y footer */
+    flex: 1; /* Importante para que use todo el espacio disponible */
+}
+
+
+.login-container {
+    margin: auto;
+    background-color: var(--color-fondo-primario);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    min-height: 600px;
+    width: 500px;
+}
+
+.auth-header {
+    background-color: var(--color-fondo-secundario) !important;
+    border-radius: var(--border-radius) !important;
+    padding: var(--espaciado-lg) !important;
+    text-align: center !important;
+    margin: 0 !important;
+    height: 100px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.auth-header h2 {
+    justify-content: center !important;
+    color: var(--color-fondo-primario) !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    margin: var(--espaciado-md) 0 var(--espaciado-md) 0 !important;
+}
+
+.auth-form {
+    background-color: var(--color-fondo-primario) !important;
+    padding: var(--espaciado-lg) !important;
+}
+
+.form-group {
+    margin-bottom: var(--espaciado-md) !important;
+    justify-content: center;
+    text-align: center;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--espaciado-sm);
+    margin-left: var(--espaciado-sm);
+    color: black;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 80%;
+    text-align: center;
+    padding: 12px 16px;
+    background-color: var(--color-input-bg);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: black;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: var(--color-input-placeholder);
+    opacity: 1.0;
+}
+
+.form-group input:focus {
+    background-color: #7ba3d4;
+}
+
+.forgot-password {
+    text-align: center;
+    margin: var(--espaciado-md) 0;
+    display: block;
+}
+
+.forgot-password a {
+    color: var(--color-link);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.button-container {
+    text-align: center !important;
+    margin-top: var(--espaciado-md) !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+.btn-login {
+    width: auto !important;
+    min-width: 200px !important; 
+    padding: 12px 24px !important;
+    background-color: var(--color-fondo-secundario) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: var(--border-radius) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
+    font-weight: bold !important;
+}
+
+.btn-login:hover {
+    background-color: var(--color-fondo-terciario) !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+
+.alert-error {
+    background-color: #f8d7da !important; 
+    color: #721c24 !important;          
+    border: 1px solid #f5c6cb !important;
+    border-radius: 5px !important;
+    padding: 12px 20px !important;
+    margin-bottom: 20px !important;
+    font-size: 14px !important;
+    text-align: left !important; 
+}
+
+.field-error {
+    color: #dc3545 !important; 
+    font-size: 0.85rem !important;
+    margin-top: 5px !important;
+    display: block !important;
+}
+
+.auth-links {
+    text-align: center;
+    margin: var(--espaciado-md) 0;
+}
+
+.auth-links a {
+    color: var(--color-link);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para el formulario de registro */
+
+.auth-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 140px); /* Espacio para header y footer */
+    padding: 40px 20px;
+    flex: 1; /* Importante para que use todo el espacio disponible */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    height: auto;
+}
+
+.register {
+    margin: auto;
+    background-color: var(--color-fondo-primario);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.errorlist {
+    display: none;
+    position: absolute; 
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.form-group-register {
+    position: relative; 
+}
+
+
+/* Estilo para el contenedor principal del formulario */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+
+/* Estilo para cada grupo de campo (label + input) */
+
+.form-group-register {
+    display: flex;
+    flex-direction: column; 
+    margin-bottom: 15px; 
+}
+
+
+.form-group-register label {
+    text-align: left; 
+    padding-right: 10px; 
+}
+
+
+.form-group-register input,
+.form-group-register select,
+.form-group-register textarea {
+    width: 100%; 
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+/* Estilo para el botón de enviar */
+.form-grid button {
+    grid-column: 1 / -1; 
+    padding: 10px 15px;
+    background-color: var(--color-fondo-secundario); 
+    color: var(--color-fondo-primario);
+    border: none;
+    border-radius: var(--border-radius) !important;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+
+.form-grid button:hover {
+    background-color: var(--color-fondo-terciario);
+    color: black;
+    font-weight: bold;
+}
+
+.btn-register {
+    text-align: center;
+}
+/* El botón debe ocupar una celda específica de la grilla */
+.button-group {
+    grid-column: 1 !important; 
+    grid-row: auto !important; 
+    display: flex !important;
+    align-items: flex-end !important;
+}
+
+.button-group button {
+    width: 100% !important;
+    padding: 10px !important;
+    text-align: center !important;
+}
+
+/* Estilo para el campo de avatar */
+.avatar-group {
+    grid-column: 2 !important; 
+    grid-row: 3 / span 3 !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+/* Estilos para el contenedor del popup */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Estilos para el texto del popup */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    font-size: 0.5em;
+    background-color: var(--color-fondo-terciario);
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -125px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Flecha del popup */
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--color-fondo-terciario) transparent transparent transparent;
+}
+
+/* Muestra el popup cuando el usuario pasa el mouse por encima */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip.active .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+/* Estilos para logout y el success registration */
+.success-message {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.success-message p {
+    margin: 5px 0;
+}
+
+
+/* Responsive */
+@media (max-width: 480px) {
+    body {
+        padding: var(--espaciado-sm);
+    }
+    .login-container {
+        width: 90%;                      
+        height: auto;                 
+    }
+
+    .auth-header,
+    .auth-form {
+        padding: var(--espaciado-md);
+    }
+}

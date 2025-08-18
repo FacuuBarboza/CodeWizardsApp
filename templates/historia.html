@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %} 
+    <section class="relative overflow-hidden mt-8">
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-100 via-teal-50 to-sky-100"></div>
+      <div class="relative px-4 py-16 sm:py-20">
+       <h2 class="font-dancing text-3xl sm:text-4xl font-extrabold tracking-tight text-stone-900">
+       Chaco: territorio, memoria y diversida</h2>
+
+        <p class="mt-4 max-w-3xl text-stone-700">Ubicada en el nordeste argentino, la provincia del Chaco reúne bosques, ríos y el histórico “Impenetrable”. Su identidad se forja a partir del encuentro entre pueblos originarios, procesos de colonización, economías regionales y una vida cultural vibrante.</p>
+      </div>
+    </section>
+
+    <section id="intro" class="mt-10">
+      <h3 class="text-2xl font-bold">Introducción</h3>
+      <p class="mt-3 leading-relaxed">El Chaco fue durante siglos un territorio de gran densidad forestal y biodiversidad, habitado por comunidades indígenas con fuertes tradiciones de movilidad, caza, pesca y recolección. Durante los siglos XIX y XX fue escenario de campañas militares, misiones religiosas y la expansión de los obrajes madereros y la industria del tanino. Convertido en provincia en <strong>1951</strong>, adoptó el nombre de <em>Provincia Presidente Perón</em> y, desde <strong>1955</strong>, recuperó el nombre <em>Chaco</em>. Su capital es <strong>Resistencia</strong>, conocida como “ciudad de las esculturas”.</p>
+    </section>
+
+    <section id="evolucion" class="mt-12">
+      <h3 class="text-2xl font-bold">Evolución histórica y cultural del Chaco</h3>
+      <div class="mt-4 space-y-6">
+        <p>Antes de la llegada de los europeos, el territorio estaba habitado por pueblos originarios como los Qom, Wichí y Moqoit, quienes organizaban su vida en torno al monte, los ríos y la movilidad estacional. Sus conocimientos de la naturaleza les permitían subsistir mediante la caza, la pesca, la recolección y una producción artesanal que aún hoy perdura.</p>
+        <p>Durante la etapa colonial, entre los siglos XVI y XVIII, el Chaco se mantuvo en gran medida fuera del control español. Las expediciones misioneras intentaron fundar reducciones religiosas, pero la resistencia indígena y la geografía dificultaron la consolidación del poder colonial.</p>
+        <p>En el siglo XIX, el avance de los Estados nacionales trajo consigo campañas militares que modificaron el equilibrio territorial. En 1884 se creó el <em>Territorio Nacional del Chaco</em>, dando inicio a una etapa de colonización agrícola y forestal, con el auge de la explotación del quebracho colorado, fundamental para la producción de tanino en la industria internacional.</p>
+        <p>A comienzos del siglo XX, la introducción del <strong>algodón</strong> marcó un hito en la economía regional. Su cultivo transformó el paisaje social con la llegada de migrantes europeos y de otras provincias argentinas, que fundaron colonias agrícolas y dieron origen a nuevas ciudades, como Presidencia Roque Sáenz Peña. Esta diversificación demográfica impulsó un mosaico cultural único, donde se entrelazaron costumbres criollas, indígenas e inmigrantes.</p>
+        <p>La provincialización en 1951 fortaleció las instituciones políticas, educativas y culturales. Resistencia, convertida en capital, se consolidó como centro administrativo y cultural, destacándose por su apuesta al arte público con esculturas a cielo abierto y festivales que la llevaron a ser reconocida como “Ciudad de las Esculturas”.</p>
+        <p>En las últimas décadas, la provincia ha buscado equilibrar desarrollo económico con preservación ambiental y reconocimiento de derechos indígenas. El Parque Nacional El Impenetrable es hoy símbolo de conservación, mientras que las comunidades originarias luchan por revitalizar sus lenguas y tradiciones.</p>
+      </div>
+    </section>
+    <section id="cultura" class="mt-12">
+      <h3 class="text-2xl font-bold">Cultura viva</h3>
+      <div class="mt-4 grid sm:grid-cols-2 gap-4">
+        <article class="p-4 rounded-2xl bg-white border border-stone-200 shadow-sm">
+          <h4 class="font-semibold">Artes y patrimonio</h4>
+          <p class="text-sm mt-1">Resistencia es llamada “ciudad de las esculturas” por su patrimonio urbano y la <strong>Bienal Internacional de Escultura</strong>. Museos, bibliotecas y ferias fortalecen la vida cultural provincial.</p>
+        </article>
+        <article class="p-4 rounded-2xl bg-white border border-stone-200 shadow-sm">
+          <h4 class="font-semibold">Música, fiestas y sabores</h4>
+          <p class="text-sm mt-1">Chamamé, zambas y ritmos litoraleños conviven con expresiones contemporáneas. En la mesa: chipá, mbeyú, pescados de río, mieles y carnes del monte.</p>
+        </article>
+      </div>
+      <p class="mt-3 text-sm text-stone-700">La memoria histórica incluye episodios como la <strong>Masacre de Napalpí (1924)</strong>, hoy reconocida y con políticas de reparación simbólica, que invita a reflexionar sobre derechos humanos y plurinacionalidad.</p>
+    </section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+
+    <section>
+        <h1><strong>Crear un post</strong></h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container-form">
+                <aside class="form-options">
+                    <label class="label-options"> <strong>Autor:</strong> {{ form.author }}</label> 
+                    <label class="label-options"><strong>Categoria:</strong> {{ form.category }}</label>
+                    <label class="label-options"><strong>Ciudad:</strong> {{ form.city }}</label>
+                    <label class="label-options"> <strong>Permitir cometarios: </strong>{{ form.allow_comments }} </label>
+                </aside>
+
+                <div class="form-info">
+                    <label class="label-options">Imagen de portada: {{ form.cover_img }} </label>
+                
+                    <label>Titulo</label>
+                    {{ form.title }}
+                    
+                    <label>Slug</label>
+                    {{ form.slug }}
+                    
+                    <label>Contenido</label>
+                    {{ form.content }}
+                    
+                </div>
+
+                <button type="submit">Guardar</button>
+            </div>
+
+        </form>
+    </section
+{% endblock %}

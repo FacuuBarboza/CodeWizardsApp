@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %}
+<section class="bg-[var(--Mi-color3)] py-12">
+    <div class="max-w-7xl mx-auto px-4">
+        <h1 class="text-4xl font-bold text-[var(--Mi-color4)] mb-4">
+            {% if proximos_eventos|length == 1 %}
+                Se encontró 1 evento que coincide con tu búsqueda
+            {% else %}
+                Resultados de búsqueda ({{ proximos_eventos|length }})
+            {% endif %}
+        </h1>
+
+        <!-- Formulario de búsqueda refinada -->
+        <form method="GET" action="{% url 'busqueda' %}" class="flex flex-col md:flex-row gap-3 items-center mb-8">
+            <input type="text" name="q" placeholder="Buscar..." value="{{ query }}"
+                   class="w-full md:w-1/3 px-4 py-2 rounded-lg border border-gray-300 shadow-sm">
+
+            <select name="localidad" class="w-full md:w-1/4 px-4 py-2 rounded-lg border border-gray-300 shadow-sm">
+                <option value="">Todas las localidades</option>
+                {% for loc in localidades %}
+                    <option value="{{ loc }}" {% if localidad == loc %}selected{% endif %}>{{ loc }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="date" name="fecha" value="{{ fecha }}"
+                   class="w-full md:w-1/4 px-4 py-2 rounded-lg border border-gray-300 shadow-sm">
+
+            <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600">
+                Filtrar
+            </button>
+        </form>
+
+        <!-- Filtros aplicados -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">Filtros aplicados:</h2>
+            <ul class="text-gray-600 list-disc list-inside">
+                {% if query %}<li><strong>Texto:</strong> "{{ query }}"</li>{% endif %}
+                {% if localidad %}<li><strong>Localidad:</strong> {{ localidad }}</li>{% endif %}
+                {% if fecha %}<li><strong>Fecha:</strong> {{ fecha }}</li>{% endif %}
+                {% if not query and not localidad and not fecha %}
+                    <li>No se aplicaron filtros.</li>
+                {% endif %}
+            </ul>
+
+            <div class="mt-4">
+                <a href="{% url 'busqueda' %}" class="inline-block bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                    Limpiar filtros
+                </a>
+            </div>
+        </div>
+
+        <!-- Resultados -->
+        {% if proximos_eventos %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {% for evento in proximos_eventos %}
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all">
+                        {% if evento.cover_img %}
+                            <img class="w-full h-56 object-cover" src="{{ evento.cover_img.url }}" alt="{{ evento.title }}">
+                        {% endif %}
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-[var(--Mi-color4)]">{{ evento.title }}</h3>
+                            <p class="text-gray-600 text-sm">{{ evento.content|truncatewords:15 }}</p>
+                            <p class="text-xs text-gray-500 mt-2">Fecha: {{ evento.fecha_evento }}</p>
+                            <p class="text-xs text-gray-500 mt-1">Localidad: {{ evento.localidad }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-500 text-lg mt-8">No se encontraron eventos que coincidan con tu búsqueda.</p>
+        {% endif %}
+
+        <!-- Volver al inicio -->
+        <div class="mt-10 text-center">
+            <a href="{% url 'inicio' %}" class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">
+                Volver al inicio
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

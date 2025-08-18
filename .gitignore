@@ -13,7 +13,6 @@ media/
 !**/migrations/__init__.py
 
 # Static files
-/static/
 /staticfiles/
 /collected_static/
 
@@ -107,3 +106,4 @@ yarn-error.log*
 *.key
 *.crt
 secrets.json
+blog-repo/

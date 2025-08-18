@@ -1,0 +1,73 @@
+<!-- templates/auth/auth_login.html -->
+{% extends 'base.html' %}
+{% load static %}
+    <title>{% block title %}Iniciar Sesión{% endblock %}</title>
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}?v={{ timestamp }}">
+{% endblock %}
+
+{% block contenido %}
+    <div class="auth-wrapper">
+        <div class="login-container">
+            <div class="auth-header">
+                <h2>Ingresa a tu cuenta</h2>
+            </div>
+
+            <div class="auth-form">
+
+                <!-- Mostrar errores si los hay -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-error">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            
+            
+                <form  method="post">
+                    {% csrf_token %}
+                
+                    <!-- Campo usuario -->
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}">Usuario</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="field-error">
+                                {% for error in form.username.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Campo contraseña -->
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="field-error">
+                                {% for error in form.password.errors %}
+                                    p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Botón submit centrado -->
+                    <div class="button-container">
+                        <button type="submit" class="btn-login">Iniciar sesión</button>
+                    </div>
+                </form>
+            
+                <!-- Enlaces adicionales -->
+                <div class="auth-links">
+                    <p>¿No tienes cuenta? <a href="{% url 'accounts:auth_register' %}">Regístrate aquí</a></p>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Olvidaste tu contraseña</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
