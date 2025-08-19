@@ -12,7 +12,9 @@ except ImportError:
 DEBUG = False
 
 # TODO: Configurar el dominio de produccion
-ALLOWED_HOSTS = ["127.0.0.1","localhost", "www.blogcultural.com"]
+
+ALLOWED_HOSTS = ["facubarboza.pythonanywhere.com"]
+
 
 # TODO: Configurar la base de datos de produccion
 DATABASES = {
@@ -27,6 +29,7 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
+
     }
 }
 
