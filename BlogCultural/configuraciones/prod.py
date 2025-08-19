@@ -12,7 +12,9 @@ except ImportError:
 DEBUG = False
 
 # TODO: Configurar el dominio de produccion
-ALLOWED_HOSTS = ["www.midominio.com"]
+
+ALLOWED_HOSTS = ["facubarboza.pythonanywhere.com"]
+
 
 # TODO: Configurar la base de datos de produccion
 DATABASES = {
@@ -23,10 +25,11 @@ DATABASES = {
         # "ENGINE": "django.db.backends.postgresql",
         "ENGINE": "django.db.backends.mysql",
         "NAME": os.getenv("DB_NAME"),
-        # "USER": os.getenv("DB_USER"),
-        # "PASSWORD": os.getenv("DB_PASSWORD"),
-        # "HOST": os.getenv("DB_HOST"),
-        # "PORT": os.getenv("DB_PORT"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
+
     }
 }
 

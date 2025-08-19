@@ -9,13 +9,15 @@ from django.db.models.signals import post_save
 
 @receiver(post_save, sender=User)
 def create_groups_and_permissions(sender, instance, created, **kwargs):
-    if created and instance.is_superuser and User:
+    if created and instance.is_superuser and User.objects.filter(is_superuser=True).count() == 1::
+
         try:
             post_content_type = ContentType.objects.get_for_model(Post)
             comment_content_type = ContentType.objects.get_for_model(Comment)
 
             # Permisos de POST
             view_post_permission = Permission.objects.get(
+
                 codename='view_postmodel', content_type=post_content_type)
             add_post_permission = Permission.objects.get(
                 codename='add_postmodel', content_type=post_content_type)
