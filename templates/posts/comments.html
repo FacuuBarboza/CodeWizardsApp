@@ -9,7 +9,7 @@
                         <label for="comment" class="block text-gray-500 h-50 font-medium">{{ form.content }}</label>
                     
                     </div>
-                    <button type="submit" class="bg-purple-700 text-white font-medium py-2 px-4 rounded hover:bg-purple-600" >Enviar</button>
+                    <button type="submit" class="p-2 flex items-center gap-x-1.5  bg-[var(--Mi-color4)] text-white font-medium rounded hover:bg-[var(--Mi-color5)]" >Enviar <span class="material-symbols-outlined">send</span></button>
                 </form>
             </div>
         </div>
@@ -35,7 +35,7 @@
         
 
         <!-- Navegación de páginas -->
-        <nav class="inline-flex p-1 space-x-2">
+        <nav class="flex justify-center items-center">
             {% if comments.has_previous %}
                 <a class="p-1 rounded border text-black bg-white hover:text-white hover:bg-blue-600 hover:border-blue-600" href="?page={{ comments.previous_page_number }}"> <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" /></svg></a>
             {% endif %}

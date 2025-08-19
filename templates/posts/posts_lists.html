@@ -1,5 +1,5 @@
 
-<section class="h-full">
+<section class="h-full ">
 
     <h2 class="text-3xl font-bold mb-6 text-[var(--Mi-color4)]">Próximos eventos</h2>
     
@@ -9,21 +9,35 @@
             <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-3" >
                 {% for post in  posts %}
             
-                    <div class=" bg-white shadow-gray-800 shadow-md rounded-lg p-6">
+                    <div class=" bg-white shadow-gray-800 shadow-md rounded-lg p-5">
                         
-                        <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{{ post.cover_img.url }}" alt="Logo">
+                        <img class="object-cover object-center w-full mb-5 lg:h-48 md:h-36 rounded-xl" src="{{ post.cover_img.url }}" alt="Logo">
             
 
-                        <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">{{ post.title }} </h1>
+                        <h1 class="mx-auto mb-5 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">{{ post.title }} </h1>
                         <p class="h-24 mx-auto text-base leading-relaxed text-gray-500"> {{ post.content|truncatewords:15 }} </p>
 
                         <hr>
-                        <label class="h-24 mx-auto text-base leading-relaxed text-gray-500" > <strong> Autor: </strong> {{ post.author }} </label>
-                        <label class="h-24 mx-auto text-base leading-relaxed text-gray-500" >- {{ post.created_at }} </label>
-                        <label class="h-24 mx-auto text-base leading-relaxed text-gray-500"> <strong> Categoria: </strong> {{ post.category }} </label>
-                        <span class="material-symbols-outlined">calendar_today</span>
-                        <div class="mt-4">
-                            <a class="inline-flex items-center mt-4 font-semibold text-blue-600 lg:mb-0 hover:text-neutral-600" href="{% url 'posts_details' post.slug %}">Ver>> </a>
+                        <div class="mt-2 text-neutral-600" >
+                            <div>
+                                <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Autor: </label>
+                                <label>{{ post.author }} - {{ post.created_at }} </label>
+                            </div>
+                            <div>
+                                <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Fecha del evento: </label>
+                                <label>{{ post.created_at }} </label>
+                            </div>
+                            <div>
+                                <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Hora: </label> 
+                                <label>{{ post.created_at }} </label>
+                            </div>
+                            <div>
+                                <label class="h-24 font-bold mx-auto text-base leading-relaxed">Categoria: </label> 
+                                <label>{{ post.category }}</label>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <a class="inline-flex items-center font-semibold text-blue-600 lg:mb-0 hover:text-neutral-600" href="{% url 'posts_details' post.slug %}">Ver>> </a>
                         </div>
                     </div>
             

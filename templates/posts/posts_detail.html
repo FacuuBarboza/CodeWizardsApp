@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% block contenido %}
 
-<div class="post-container">
-    <div class="post-cover-container">
-        <img class="post-cover" src="{{ post.cover_img.url }}" alt="Imagen de portada">
-        <h1 class="post-title">{{ post.title }}</h1>
+<section class="h-full m-5">
+    <div class="post-container">
+        <div class="post-cover-container">
+            <img class="post-cover" src="{{ post.cover_img.url }}" alt="Imagen de portada">
+            <h1 class="post-title">{{ post.title }}</h1>
+        </div>
+        <p class="post-content">{{ post.content }}</p>
     </div>
-    <p class="post-content">{{ post.content }}</p>
-</div>
 
-{% include "posts/comments.html" with comments=comments form=form %}
+    {% include "posts/comments.html" with comments=comments form=form %}
 
+</section>
 {% endblock %}
