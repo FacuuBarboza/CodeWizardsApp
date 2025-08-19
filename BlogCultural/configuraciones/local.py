@@ -3,7 +3,7 @@ from BlogCultural.configuraciones.base import *
 
 # En local o desarrollo debe estar en True
 DEBUG = True
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["facubarboza.pythonanywhere.com"]
 
 DATABASES = {
     "default": {
