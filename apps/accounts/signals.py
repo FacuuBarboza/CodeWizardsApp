@@ -9,30 +9,30 @@ from django.db.models.signals import post_save
 
 @receiver(post_save, sender=User)
 def create_groups_and_permissions(sender, instance, created, **kwargs):
-    if created and instance.is_superuser:
+    if created and instance.is_superuser and User:
         try:
             post_content_type = ContentType.objects.get_for_model(Post)
             comment_content_type = ContentType.objects.get_for_model(Comment)
 
             # Permisos de POST
             view_post_permission = Permission.objects.get(
-                codename='view_post', content_type=post_content_type)
+                codename='view_postmodel', content_type=post_content_type)
             add_post_permission = Permission.objects.get(
-                codename='add_post', content_type=post_content_type)
+                codename='add_postmodel', content_type=post_content_type)
             change_post_permission = Permission.objects.get(
-                codename='change_post', content_type=post_content_type)
+                codename='change_postmodel', content_type=post_content_type)
             delete_post_permission = Permission.objects.get(
-                codename='delete_post', content_type=post_content_type)
+                codename='delete_postmodel', content_type=post_content_type)
 
             # Permisos de COMMENT
             view_comment_permission = Permission.objects.get(
-                codename='view_comment', content_type=comment_content_type)
+                codename='view_commentsmodel', content_type=comment_content_type)
             add_comment_permission = Permission.objects.get(
-                codename='add_comment', content_type=comment_content_type)
+                codename='add_commentsmodel', content_type=comment_content_type)
             change_comment_permission = Permission.objects.get(
-                codename='change_comment', content_type=comment_content_type)
+                codename='change_commentsmodel', content_type=comment_content_type)
             delete_comment_permission = Permission.objects.get(
-                codename='delete_comment', content_type=comment_content_type)
+                codename='delete_commentsmodel', content_type=comment_content_type)
 
             # Crear grupos de usuarios registrados
             registered_group, created = Group.objects.get_or_create(
