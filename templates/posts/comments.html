@@ -1,46 +1,52 @@
 {% if user.is_authenticated %}   
     <hr>
     {% if post.allow_comments %}
-        <div class="container-new-comments">
-            <div class="container-form">
-                <form method="post">
+        <div class="m-5">
+            <div class="w-full rounded-lg border-2 border-gray-500 p-5 mx-auto max-w-full">
+                <form class="mt-4" method="post">
                     {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="comment" class="block text-gray-500 h-50 font-medium">{{ form.content }}</label>
                     
-                    {{ form.content }}
-                    <button type="submit">Enviar</button>
+                    </div>
+                    <button type="submit" class="bg-purple-700 text-white font-medium py-2 px-4 rounded hover:bg-purple-600" >Enviar</button>
                 </form>
             </div>
         </div>
 
-        <div class="container-comments">
-            <h3><strong>Comentarios: {{ post.comments.count }}</strong></h3>
-            <div class="comments">
-                {% for comment in comments %}
-                    
-                        <label><strong>{{ comment.user }} </strong> dijo:</label>
-                        <p>{{ comment.content }} </p>
-                        <small> {{ comment.created_at}}</small>
-                        <hr>
-                    
-                {% empty %}
-                    <p>No hay comentarios</P>
-                {% endfor %}
-            </div>
+        <div class="w-full p-4 my-8 mx-auto max-w-full">
+            <h3 class="font-os text-lg font-bold" >Comentarios: {{ post.comments.count }}</h3>
+            {% for comment in comments %}
+                <div class="flex mt-4">
+                    <div class="m-5 w-14 h-14 rounded-full bg-gray-400 flex-shrink-0 flex items-center justify-center">
+                        <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/men/43.jpg"alt="">
+                    </div>
+                    <div class="ml-3">
+                        <label class="font-medium "><strong>{{ comment.user }} </strong></label>
+                        <label class="text-gray-600" > - <small> {{ comment.created_at}}</small></label>
+                        <p class="mt-2" >{{ comment.content }} </p> 
+                    </div>
+                </div>
+                <hr>
+            {% empty %}
+                <p>No hay comentarios</P>
+            {% endfor %}
         </div>
         
 
         <!-- Navegación de páginas -->
-        <div class="pagination">
+        <nav class="inline-flex p-1 space-x-2">
             {% if comments.has_previous %}
-                <a class="arrow-pagination" href="?page={{ comments.previous_page_number }}"> << Anterior </a>
+                <a class="p-1 rounded border text-black bg-white hover:text-white hover:bg-blue-600 hover:border-blue-600" href="?page={{ comments.previous_page_number }}"> <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" /></svg></a>
             {% endif %}
 
-            <span><strong>Página {{ comments.number }} de {{ comments.paginator.num_pages }}</strong></span>
+            <span><label class="text-gray-500" >Página {{ comments.number }} de {{ comments.paginator.num_pages }}</label></span>
 
             {% if comments.has_next %}
-                <a class="arrow-pagination" href="?page={{ comments.next_page_number }}">Siguiente >></a>
+                <a class="p-1 rounded border text-black bg-white hover:text-white hover:bg-blue-600 hover:border-blue-600" href="?page={{ comments.next_page_number }}"><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" /></svg></a>
             {% endif %}
-        </div>
+        </nav>
+        
 
     {% else %}
         <h3>El autor del post desactivo los comentarios</h3>

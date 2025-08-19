@@ -7,25 +7,25 @@ from django.contrib.auth.models import User
 
 class Category:
     TITLE = {
-        "1": "Deporte",
-        "2": "Noticias",
-        "3": "Aviso",
-        "4": "Religion",
-        "5": "Fiesta",
-        "6": "Invitacio",
-        "7": "Otros",
+        "Deposte": "Deporte",
+        "Noticias": "Noticias",
+        "Aviso": "Aviso",
+        "Reqligion": "Religion",
+        "Fiestas": "Fiesta",
+        "Invitacion": "Invitacio",
+        "Otros": "Otros",
     }
 
 
 class City:
     TITLE = {
-        "1": "Resistencia",
-        "2": "Fontana",
-        "3": "Saens Peña",
-        "4": "Quitilipi",
-        "5": "Villa Berthet",
-        "6": "Samuhu",
-        "7": "Otros",
+        "Resistencia": "Resistencia",
+        "Fontana": "Fontana",
+        "Saenz Peña": "Saens Peña",
+        "Quitilipi": "Quitilipi",
+        "Villa Berthet": "Villa Berthet",
+        "Samuhu": "Samuhu",
+        "Otros": "Otros",
     }
 
 
@@ -48,7 +48,7 @@ class PostsModel(models.Model):
     cover_img = models.ImageField(default="cover/cover_default.jpg", upload_to="cover/")
 
     def __str__(self):
-        return self.title
+        return str(self.author)
 
     # def get_absolute_url(self):
     #     return reverse("posts_detail", kwargs={"pk": self.pk})
