@@ -44,7 +44,6 @@
 <!-- MOSTRAR COMENTARIOS (PARA TODOS) -->
 <div class="container-comments">
     <h3 class="text-xl font-bold mb-4">💬 Comentarios ({{ post.comments.count }})</h3>
-
     {% if post.comments.count > 0 %}
     <div class="comments space-y-4">
         {% for comment in comments %}

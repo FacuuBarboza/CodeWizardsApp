@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 {% block contenido %}
 
-<div class="post-container">
-    <div class="post-cover-container">
-        <img class="post-cover" src="{{ post.cover_img.url }}" alt="Imagen de portada">
-        <h1 class="post-title">{{ post.title }}</h1>
+<section class="h-full m-5">
+    <div class="post-container">
+        <div class="post-cover-container">
+            <img class="post-cover" src="{{ post.cover_img.url }}" alt="Imagen de portada">
+            <h1 class="post-title">{{ post.title }}</h1>
+        </div>
+        <p class="post-content">{{ post.content }}</p>
     </div>
     
     <div class="post-meta">
@@ -18,11 +21,11 @@
     <div class="post-content">
         {{ post.content|linebreaks }}
     </div>
-</div>
 
 <!-- Ancla para scroll después de comentar -->
 <div id="comments-section">
     {% include "posts/comments.html" with comments=comments form=form %}
 </div>
 
+</section>
 {% endblock %}

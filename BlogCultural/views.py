@@ -30,7 +30,7 @@ def home(request):
     
     if author:
         posts = posts.filter(author__username=author)
-        
+      
     if localidad:
         posts = posts.filter(localidad__icontains=localidad)
     
@@ -77,16 +77,20 @@ def busqueda_views(request):
     return home(request)
 
 def lugares_view(request):
-    return render(request, 'lugares.html')
+    return render(request, "lugares.html")
+
 
 def eventos_view(request):
     return render(request, "eventos.html")
 
+
 def historia_view(request):
     return render(request, "historia.html")
 
+
 def nosotros_view(request):
     return render(request, "nosotros.html")
+
 
 def evento_detail(request, id):
     evento = get_object_or_404(PostsModel, id=id)

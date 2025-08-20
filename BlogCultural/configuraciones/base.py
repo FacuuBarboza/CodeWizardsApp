@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apps.posts",
     "apps.accounts",
     "apps.comments",
+    "apps.mi_blog",
 ]
 
 MIDDLEWARE = [
@@ -122,12 +123,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ADMIN_ENABLED = True
 
 # Configurar sesiones separadas
-SESSION_COOKIE_NAME = 'sessionid_web'  # Para tu aplicación web
-ADMIN_SESSION_COOKIE_NAME = 'sessionid_admin'  # Para admin
+SESSION_COOKIE_NAME = "sessionid_web"  # Para tu aplicación web
+ADMIN_SESSION_COOKIE_NAME = "sessionid_admin"  # Para admin
 
 # Configurar contextos de autenticación separados
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Para ambos
+    "django.contrib.auth.backends.ModelBackend",  # Para ambos
 ]
 
 AUTH_USER_MODEL = "accounts.User"

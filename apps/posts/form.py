@@ -13,6 +13,8 @@ class PostsForm(forms.ModelForm):
             "title",
             "slug",
             "content",
+            "event_date",
+            "event_time",
             "allow_comments",
         ]
 
@@ -26,4 +28,6 @@ class PostsForm(forms.ModelForm):
             "content": forms.Textarea(
                 attrs={"class": "form-input", "placeholder": "Ingrese un contenido"}
             ),
+            "event_date": forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
+            "event_time": forms.TimeInput(format="%H:%M", attrs={"type": "time"}),
         }
