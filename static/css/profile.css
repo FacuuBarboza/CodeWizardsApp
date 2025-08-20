@@ -372,14 +372,21 @@
     min-width: 200px;
 }
 
-.form-grid {
+.form-grid-profile {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
+.form-password {
+    display: flex;
+}
 
-.form-group {
+.form-group-profile {
+    margin-bottom: 0;
+}
+
+.form-group-profile-pw {
     margin-bottom: 0;
 }
 
@@ -387,7 +394,7 @@
     color:var(--color-letras) !important;
 }
 
-.form-group label {
+.form-group-profile label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
@@ -398,9 +405,20 @@
     gap: 8px;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.form-group-profile-pw label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--color-letras-secundaria);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group-profile input,
+.form-group-profile select,
+.form-group-profile textarea {
     width: 50%;
     padding: 12px;
     border: 2px solid var(--border-color);
@@ -410,13 +428,34 @@
     box-sizing: border-box;
 }
 
-.form-group input:hover,
-.form-group select:hover,
-.form-group textarea:hover {
+.form-group-profile-pw input,
+.form-group-profile-pw select,
+.form-group-profile-pw textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group-profile input:hover,
+.form-group-profile select:hover,
+.form-group-profile textarea:hover {
     outline: none;
     border-color: var(--color-fondo-secundario);
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
+
+.form-group-profile-pw input:hover,
+.form-group-profile-pw select:hover,
+.form-group-profile-pw textarea:hover {
+    outline: none;
+    border-color: var(--color-fondo-secundario);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
 
 .file-upload-label {
     display: inline-flex !important;
@@ -437,7 +476,7 @@
     color:var(--color-letras)
 }
 
-.form-group input[type="file"] {
+.form-group-profile input[type="file"] {
     display: none;
 }
 

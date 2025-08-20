@@ -15,12 +15,6 @@
    --espaciado-lg: 24px;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: var(--font-primary);
     min-height: 100vh;
@@ -35,7 +29,6 @@ body {
     justify-content: center;
     align-items: center;
     min-height: calc(100vh - 140px); /* Espacio para header y footer */
-    padding: 40px 20px;
     flex: 1; /* Importante para que use todo el espacio disponible */
 }
 
@@ -375,11 +368,6 @@ body {
 }
 
 
-#footer {
-    margin-top: 0; /* Reset para páginas de auth */
-    position: relative;
-    bottom: 0;
-}
 /* Responsive */
 @media (max-width: 480px) {
     body {

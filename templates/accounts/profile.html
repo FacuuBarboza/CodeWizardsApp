@@ -99,7 +99,7 @@
                                     <i class="fas fa-hands-helping"></i> Colaborador
                                 {% elif group.name == 'Admins' %}
                                     <i class="fas fa-crown"></i> Administrador
-                                {% else %}
+                                {% elif group.name == 'Superuser' %}
                                     <i class="fas fa-tag"></i> {{ group.name }}
                                 {% endif %}
                             </span>

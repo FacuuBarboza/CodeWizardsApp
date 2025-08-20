@@ -1,51 +1,127 @@
-
-<section class="h-full ">
-
-    <h2 class="text-3xl font-bold mb-6 text-[var(--Mi-color4)]">Próximos eventos</h2>
+<section class="max-w-7xl mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-[var(--Mi-color4)]">
+            {% if query or category or localidad or fecha %}
+                Resultados de búsqueda
+            {% else %}
+                Últimas publicaciones
+            {% endif %}
+        </h2>
+        {% if posts.paginator.count %}
+            <span class="text-gray-600">
+                {{ posts.paginator.count }} publicacion{{ posts.paginator.count|pluralize:"es" }}
+            </span>
+        {% endif %}
+    </div>
     
-    <div class="">
-               
-        <div class="relative items-center w-full px-5 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl">
-            <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-3" >
-                {% for post in  posts %}
-            
-                    <div class=" bg-white shadow-gray-800 shadow-md rounded-lg p-5 transition duration-300 hover:scale-105">
-                        
-                        <img class="object-cover object-center w-full mb-5 lg:h-48 md:h-36 rounded-xl" src="{{ post.cover_img.url }}" alt="Logo">
-            
-
-                        <h1 class="mx-auto mb-5 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">{{ post.title }} </h1>
-                        <p class="h-24 mx-auto text-base leading-relaxed text-gray-500"> {{ post.content|truncatewords:15 }} </p>
-
-                        <hr>
-                        <div class="mt-2 text-neutral-600" >
-                            <div>
-                                <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Autor: </label>
-                                <label>{{ post.author }} - {{ post.created_at }} </label>
-                            </div>
-                            <div>
-                                <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Fecha del evento: </label>
-                                <label>{{ post.event_date }} </label>
-                            </div>
-                            <div>
-                                <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Hora de inicio: </label>
-                                <label>{{ post.event_time }} </label>
-                            </div>
-                            <div>
-                                <label class="h-24 font-bold mx-auto text-base leading-relaxed">Categoria: </label> 
-                                <label>{{ post.category }}</label>
-                            </div>
-                        </div>
-                        <div class="mt-2">
-                            <a class="inline-flex items-center font-semibold text-blue-600 lg:mb-0 hover:text-neutral-600" href="{% url 'posts_details' post.slug %}">Ver>> </a>
-                        </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for post in posts %}
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                {% if post.cover_img %}
+                    <div class="h-48 overflow-hidden">
+                        <img class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                             src="{{ post.cover_img.url }}" alt="{{ post.title }}">
                     </div>
+                {% endif %}
+                
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-[var(--Mi-color4)] mb-2 line-clamp-2">
+                        {{ post.title }}
+                    </h3>
+                    
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                        {{ post.content|truncatewords:20 }}
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4 text-xs">
+                        {% if post.category %}
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                {{ post.category }}
+                            </span>
+                        {% endif %}
+                        {% if post.localidad %}
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                📍 {{ post.localidad }}
+                            </span>
+                        {% endif %}
+                        {% if post.fecha_evento %}
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                                📅 {{ post.fecha_evento }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                        <span>Por: {{ post.author.username }}</span>
+                        <span>{{ post.created_at|date:"d/m/Y" }}</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="flex gap-4 text-sm text-gray-500">
+                            <span>💬 {{ post.comments_count|default:0 }}</span>
+                        </div>
+                        
+                        <a href="{% url 'posts:posts_detail' post.slug %}" 
+                           class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                            Leer más →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-span-full text-center py-12">
+                {% if query or category or localidad or fecha %}
+                    <div class="text-gray-500">
+                        <h3 class="text-xl font-semibold mb-2">😔 No se encontraron resultados</h3>
+                        <p class="mb-4">Intenta con otros términos de búsqueda o filtros.</p>
+                        <a href="{% url 'inicio' %}" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                            Ver todas las publicaciones
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="text-gray-500">
+                        <h3 class="text-xl font-semibold mb-2">📝 No hay publicaciones todavía</h3>
+                        <p>¡Sé el primero en publicar contenido!</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Paginación mejorada -->
+    {% if posts.has_other_pages %}
+        <div class="flex justify-center items-center gap-2 mt-8">
+            {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}&q={{ query }}&category={{ category }}&localidad={{ localidad }}&fecha={{ fecha }}" 
+                   class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                    ← Anterior
+                </a>
+            {% endif %}
             
-                {% empty %}
-                    <h5>No hay posts todavia.</h5>
+            <div class="flex gap-1">
+                {% for num in posts.paginator.page_range %}
+                    {% if posts.number == num %}
+                        <span class="bg-blue-500 text-white px-3 py-2 rounded-lg">{{ num }}</span>
+                    {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+                        <a href="?page={{ num }}&q={{ query }}&category={{ category }}&localidad={{ localidad }}&fecha={{ fecha }}" 
+                           class="bg-gray-200 text-gray-700 px-3 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                            {{ num }}
+                        </a>
+                    {% endif %}
                 {% endfor %}
             </div>
+            
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}&q={{ query }}&category={{ category }}&localidad={{ localidad }}&fecha={{ fecha }}" 
+                   class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                    Siguiente →
+                </a>
+            {% endif %}
         </div>
-    </div>
-
-<section>
+        
+        <div class="text-center text-sm text-gray-500 mt-4">
+            Mostrando página {{ posts.number }} de {{ posts.paginator.num_pages }}
+            ({{ posts.paginator.count }} resultado{{ posts.paginator.count|pluralize }} total{{ posts.paginator.count|pluralize:"es" }})
+        </div>
+    {% endif %}
+</section>

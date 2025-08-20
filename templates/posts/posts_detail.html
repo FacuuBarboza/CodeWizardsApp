@@ -9,8 +9,23 @@
         </div>
         <p class="post-content">{{ post.content }}</p>
     </div>
+    
+    <div class="post-meta">
+        <p><strong>Autor:</strong> {{ post.author.username }}</p>
+        <p><strong>Fecha:</strong> {{ post.created_at|date:"d/m/Y" }}</p>
+        {% if post.category %}
+            <p><strong>Categoría:</strong> {{ post.category }}</p>
+        {% endif %}
+    </div>
+    
+    <div class="post-content">
+        {{ post.content|linebreaks }}
+    </div>
 
+<!-- Ancla para scroll después de comentar -->
+<div id="comments-section">
     {% include "posts/comments.html" with comments=comments form=form %}
+</div>
 
 </section>
 {% endblock %}

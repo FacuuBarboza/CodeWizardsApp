@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="{% static 'assets/favicon.ico' %}">
     <!-- <link  rel="stylesheet" href="{% static 'css/base.css' %}"> -->
     {% block extra_css %} {% endblock %}
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -23,12 +23,19 @@
         --color-red: #ff6060ff;
       }
     </style>
+    {% block extracss %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.3">
+        <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.3">
+        <link rel="stylesheet" href="{% static 'css/logout.css' %}?v=1.3">
+        <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=1.3">
+    {% endblock %}
 </head>
 
 <body class="h-full bg-[var(--Mi-color3)]">
 
 <header class="pt-18">
     <nav class="bg-[var(--Mi-color)] shadow-gray-600 shadow-md rounded-l flex items-center fixed w-full top-0 z-50 px-2 py-1 flex items-center justify-between">
+
         <a href="{% url 'inicio' %}" class="flex items-center">
             <img src="{% static 'img/logo.png' %}" alt="Logo" class="h-16 md:h-18 lg:h-20">
         </a>
@@ -118,8 +125,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
-
-        
     </nav>
 </header>
 

@@ -1,56 +1,165 @@
-{% if user.is_authenticated %}   
-    <hr>
-    {% if post.allow_comments %}
-        <div class="m-5">
-            <div class="w-full rounded-lg border-2 border-gray-500 p-5 mx-auto max-w-full">
-                <form class="mt-4" method="post">
-                    {% csrf_token %}
-                    <div class="mb-4">
-                        <label for="comment" class="block text-gray-500 h-50 font-medium">{{ form.content }}</label>
-                    
-                    </div>
-                    <button type="submit" class="p-2 flex items-center gap-x-1.5  bg-[var(--Mi-color4)] text-white font-medium rounded hover:bg-[var(--Mi-color5)]" >Enviar <span class="material-symbols-outlined">send</span></button>
-                </form>
-            </div>
-        </div>
+<hr class="my-6">
+{% if post.allow_comments %}
 
-        <div class="w-full p-4 my-8 mx-auto max-w-full">
-            <h3 class="font-os text-lg font-bold" >Comentarios: {{ post.comments.count }}</h3>
-            {% for comment in comments %}
-                <div class="flex mt-4">
-                    <div class="m-5 w-14 h-14 rounded-full bg-gray-400 flex-shrink-0 flex items-center justify-center">
-                        <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/men/43.jpg"alt="">
+<!-- FORMULARIO PARA NUEVOS COMENTARIOS -->
+{% if user.is_authenticated %}
+<div class="container-new-comments mb-6">
+    <div class="container-form">
+        <h4 class="text-lg font-semibold mb-3">💬 Agregar Comentario</h4>
+        <form method="post" action="{% url 'posts:posts_detail' post.slug %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.content }}
+                {% if form.content.errors %}
+                <div class="text-red-500 text-sm mt-1">
+                    {{ form.content.errors }}
+                </div>
+                {% endif %}
+            </div>
+            <button type="submit"
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                Enviar Comentario
+            </button>
+        </form>
+    </div>
+</div>
+{% else %}
+<!-- SECCIÓN PARA USUARIOS NO AUTENTICADOS -->
+<div class="login-prompt bg-gray-50 p-4 rounded-lg mb-6">
+    <h4 class="text-lg font-semibold mb-2">💬 ¿Quieres comentar?</h4>
+    <p class="text-gray-600 mb-3">Para dejar un comentario necesitas estar registrado.</p>
+    <div class="auth-buttons flex gap-2">
+        <a href="{% url 'accounts:auth_login' %}"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+            Iniciar Sesión
+        </a>
+        <a href="{% url 'accounts:auth_register' %}"
+            class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+            Registrarse
+        </a>
+    </div>
+</div>
+{% endif %}
+
+<!-- MOSTRAR COMENTARIOS (PARA TODOS) -->
+<div class="container-comments">
+    <h3 class="text-xl font-bold mb-4">💬 Comentarios ({{ post.comments.count }})</h3>
+    {% if post.comments.count > 0 %}
+    <div class="comments space-y-4">
+        {% for comment in comments %}
+        <div class="comment-item bg-gray-50 p-4 rounded-lg" id="comment-{{ comment.id }}">
+            <div class="comment-header flex justify-between items-start mb-3">
+                <div class="comment-author flex items-center gap-2">
+                    <div
+                        class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                        {{ comment.user.username|first|upper }}
                     </div>
-                    <div class="ml-3">
-                        <label class="font-medium "><strong>{{ comment.user }} </strong></label>
-                        <label class="text-gray-600" > - <small> {{ comment.created_at}}</small></label>
-                        <p class="mt-2" >{{ comment.content }} </p> 
+                    <div>
+                        <strong class="text-gray-800">{{ comment.user.username }}</strong>
+                        <div class="text-xs text-gray-500">{{ comment.created_at|date:"d/m/Y H:i" }}</div>
                     </div>
                 </div>
-                <hr>
-            {% empty %}
-                <p>No hay comentarios</P>
-            {% endfor %}
+            </div>
+
+            <div class="comment-content mb-3">
+                <p class="text-gray-700">{{ comment.content|linebreaks }}</p>
+            </div>
+
+            <div class="comment-actions flex justify-between items-center">
+                <div class="like-section">
+                    {% if user.is_authenticated %}
+                    <button
+                        class="btn-like flex items-center gap-1 text-sm text-gray-600 hover:text-red-500 transition-colors"
+                        data-comment-id="{{ comment.id }}" onclick="likeComment({{ comment.id }})">
+                        ❤️ <span class="likes-count">{{ comment.likes_count|default:0 }}</span>
+                    </button>
+                    {% else %}
+                    <button class="btn-like flex items-center gap-1 text-sm text-gray-600" onclick="showLoginModal()">
+                        ❤️ {{ comment.likes_count|default:0 }}
+                    </button>
+                    {% endif %}
+                </div>
+
+                <!-- BOTÓN ELIMINAR (solo para el autor o admin) -->
+                {% if user.is_authenticated and comment.user == user %}
+                <form method="post" action="{% url 'posts:delete_comment' comment.id %}"
+                    onsubmit="return confirm('¿Estás seguro de que quieres eliminar este comentario?')" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-delete text-sm text-red-600 hover:text-red-800 transition-colors">
+                        🗑️ Eliminar
+                    </button>
+                </form>
+                {% endif %}
+            </div>
         </div>
-        
+        {% endfor %}
+    </div>
 
-        <!-- Navegación de páginas -->
-        <nav class="flex justify-center items-center">
-            {% if comments.has_previous %}
-                <a class="p-1 rounded border text-black bg-white hover:text-white hover:bg-blue-600 hover:border-blue-600" href="?page={{ comments.previous_page_number }}"> <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" /></svg></a>
-            {% endif %}
+    <!-- PAGINACIÓN DE COMENTARIOS (si es necesaria) -->
+    {% if comments.has_other_pages %}
+    <div class="pagination flex justify-center gap-2 mt-6">
+        {% if comments.has_previous %}
+        <a class="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
+            href="?page={{ comments.previous_page_number }}#comments-section">
+            ← Anterior
+        </a>
+        {% endif %}
 
-            <span><label class="text-gray-500" >Página {{ comments.number }} de {{ comments.paginator.num_pages }}</label></span>
+        <span class="bg-blue-500 text-white px-3 py-1 rounded">
+            Página {{ comments.number }} de {{ comments.paginator.num_pages }}
+        </span>
 
-            {% if comments.has_next %}
-                <a class="p-1 rounded border text-black bg-white hover:text-white hover:bg-blue-600 hover:border-blue-600" href="?page={{ comments.next_page_number }}"><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" /></svg></a>
-            {% endif %}
-        </nav>
-        
-
-    {% else %}
-        <h3>El autor del post desactivo los comentarios</h3>
-
+        {% if comments.has_next %}
+        <a class="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
+            href="?page={{ comments.next_page_number }}#comments-section">
+            Siguiente →
+        </a>
+        {% endif %}
+    </div>
     {% endif %}
+    {% else %}
+    <div class="no-comments text-center py-8 text-gray-500">
+        <p class="text-lg">📝 Aún no hay comentarios. ¡Sé el primero en comentar!</p>
+    </div>
+    {% endif %}
+</div>
 
+{% else %}
+<div class="comments-disabled bg-yellow-50 p-4 rounded-lg">
+    <h3 class="font-semibold text-yellow-800">💬 Comentarios deshabilitados</h3>
+    <p class="text-yellow-700">El autor ha desactivado los comentarios para esta publicación.</p>
+</div>
 {% endif %}
+
+
+<script>
+
+    function likeComment(commentId) {
+        fetch(`/posts/comment/like/${commentId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const likesSpan = document.querySelector(`[data-comment-id="${commentId}"] .likes-count`);
+                    if (likesSpan) {
+                        likesSpan.textContent = data.likes_count;
+                    }
+
+                    const button = document.querySelector(`[data-comment-id="${commentId}"]`);
+                    button.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        button.style.transform = 'scale(1)';
+                    }, 150);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+</script>
