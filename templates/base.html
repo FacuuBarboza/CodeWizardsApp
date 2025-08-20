@@ -27,35 +27,122 @@
 
 <body class="h-full bg-[var(--Mi-color3)]">
 
-<header class="bg-[var(--Mi-color2)]">
-    <nav class="px-2 py-3 flex items-center justify-between">
+<header class="pt-18">
+    <nav class="bg-[var(--Mi-color)] shadow-gray-600 shadow-md rounded-l flex items-center fixed w-full top-0 z-50 px-2 py-1 flex items-center justify-between">
         <a href="{% url 'inicio' %}" class="flex items-center">
             <img src="{% static 'img/logo.png' %}" alt="Logo" class="h-16 md:h-18 lg:h-20">
         </a>
 
-        <ul class="flex space-x-8 text-black font-medium">
+        <!-- Mobile Menu -->
+        <ul id="menu" class="absolute top-full left-0 w-full bg-[var(--Mi-color)] text-white flex flex-col md:hidden hidden rounded-b-lg shadow-xl overflow-hidden">
+            <li class="border-b border-gray-700 border-t">
+                <a href="mi_blog" class="block px-6 py-4 text-lg font-semibold hover:bg-[var(--Mi-color4)] hover:text-white transition duration-300">Mi blog</a>
+            </li>
+            <li class="border-b border-gray-700">
+                <a href="{% url 'inicio' %}" class="block px-6 py-4 text-lg font-semibold hover:bg-[var(--Mi-color4)] hover:text-white transition duration-300">Inicio</a>
+            </li>
+            <li class="border-b border-gray-700">
+                <a href="eventos.html" class="block px-6 py-4 text-lg font-semibold hover:bg-[var(--Mi-color4)] hover:text-white transition duration-300">Eventos</a>
+            </li>
+            <li class="border-b border-gray-700">
+                <a href="lugares.html" class="block px-6 py-4 text-lg font-semibold hover:bg-[var(--Mi-color4)] hover:text-white transition duration-300">Lugares</a>
+            </li>
+            <li class="border-b border-gray-700">
+                <a href="historia.html" class="block px-6 py-4 text-lg font-semibold hover:bg-[var(--Mi-color4)] hover:text-white transition duration-300">Historia</a>
+            </li>
+            <li class="border-b border-gray-700">
+                <a href="nosotros.html" class="block px-6 py-4 text-lg font-semibold hover:bg-[var(--Mi-color4)] hover:text-white transition duration-300">Nosotros</a>
+            </li>
+            <li class="border-b border-gray-700">
+                <a href="{% url 'accounts:auth_login' %}" class="block px-6 py-4 text-lg font-semibold hover:bg-[var(--Mi-color4)] hover:text-white transition duration-300">Iniciar sesión</a>
+            </li>
+            <li class="border-b border-gray-700">
+                <a href="{% url 'accounts:auth_register' %}" class="block px-6 py-4 text-lg font-semibold hover:bg-[var(--Mi-color4)] hover:text-white transition duration-300">Registrarse</a>
+            </li>
+        </ul>
+
+        <ul class="hidden md:flex space-x-10 flex space-x-5 text-[var(--Mi-color3)] font-medium">
             {% if user.is_authenticated %} 
-            <li><a href="mi_blog" class="hover:text-[var(--Mi-color)]">Mi blog</a></li>
+            <li>
+                <a class="group" href="mi_blog">Mi blog 
+                    <div class="bg-[var(--Mi-color3)] h-[2px] w-0 group-hover:w-full transition-all duration-500"></div>
+                </a>
+            </li>
             {% endif %}
-            <li><a href="{% url 'inicio' %}" class="hover:text-[var(--Mi-color)]">Inicio</a></li>
-            <li><a href="eventos.html" class="hover:text-[var(--Mi-color)]">Eventos</a></li>
-            <li><a href="lugares.html" class="hover:text-[var(--Mi-color)]">Lugares</a></li>
-            <li><a href="historia.html" class="hover:text-[var(--Mi-color)]">Historia</a></li>
-            <li><a href="nosotros.html" class="hover:text-[var(--Mi-color)]">Nosotros</a></li>
+            <li>
+                <a href="{% url 'inicio' %}" class="group">Inicio
+                <div class="bg-[var(--Mi-color3)] h-[2px] w-0 group-hover:w-full transition-all duration-500"></div>
+                </a>
+            </li>
+            <li>
+                <a href="eventos.html" class="group">Eventos
+                    <div class="bg-[var(--Mi-color3)] h-[2px] w-0 group-hover:w-full transition-all duration-500"></div>
+                </a>
+            </li>
+            <li>
+                <a href="lugares.html" class="group">Lugares
+                    <div class="bg-[var(--Mi-color3)] h-[2px] w-0 group-hover:w-full transition-all duration-500"></div>
+                </a>
+            </li>
+            <li>
+                <a href="historia.html" class="group">Historia
+                    <div class="bg-[var(--Mi-color3)] h-[2px] w-0 group-hover:w-full transition-all duration-500"></div>
+                </a>
+            </li>
+            <li>
+                <a href="nosotros.html" class="group">Nosotros
+                    <div class="bg-[var(--Mi-color3)] h-[2px] w-0 group-hover:w-full transition-all duration-500"></div>
+                </a>
+            </li>
         </ul>
        
-        <ul class="flex space-x-4 text-black font-medium">
-            <li><a href="{% url 'accounts:auth_login' %}" class="underline hover:text-[var(--Mi-color)]">Iniciar sesión</a></li>
-            <li><a href="{% url 'accounts:auth_register' %}" class="underline hover:text-[var(--Mi-color)]">Registrarse</a></li>
+        <ul class="hidden md:flex space-x-10 flex space-x-5 text-[var(--Mi-color3)] font-medium">
+            <li>
+                <a href="{% url 'accounts:auth_login' %}" class="group">Iniciar sesión
+                    <div class="bg-[var(--Mi-color3)] h-[2px] w-0 group-hover:w-full transition-all duration-500"></div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'accounts:auth_register' %}" class="group">Registrarse
+                    <div class="bg-[var(--Mi-color3)] h-[2px] w-0 group-hover:w-full transition-all duration-500"></div>
+                </a>
+            </li>
         </ul>
+
+        <!-- Hamburger Button -->
+        <button id="menu-btn" class="md:hidden focus:outline-none z-50" aria-label="Toggle menu">
+            <svg id="menu-open" class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg id="menu-close" class="w-8 h-8 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        
     </nav>
 </header>
+
+
 
 <main class="h-full">
     {% block contenido %}
     
     {% endblock %}
 </main>
+
+<script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    const menuOpenIcon = document.getElementById('menu-open');
+    const menuCloseIcon = document.getElementById('menu-close');
+
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      menuOpenIcon.classList.toggle('hidden');
+      menuCloseIcon.classList.toggle('hidden');
+    });
+  </script>
 
 <footer id="footer" class="bg-gray-200 border border-blue-500 py-4">
     <div class="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-2">

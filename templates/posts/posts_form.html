@@ -12,7 +12,8 @@
                         <label class="col-span-6 sm:col-span-1 text-x font-bold">Autor:{{ form.author }}</label> 
                         <label class="col-span-6 sm:col-span-1 text-x font-bold">Categoria:{{ form.category }}</label>
                         <label class="col-span-6 sm:col-span-1 text-x font-bold">Ciudad:{{ form.city }}</label>
-                        <label class="col-span-6 sm:col-span-1 text-x font-bold">Fecha del evento:{{ form.fecha_evento }}</label>
+                        <label class="col-span-6 sm:col-span-1 text-x font-bold">Fecha del evento:{{ form.event_date }}</label>
+                        <label class="col-span-6 sm:col-span-1 text-x font-bold">Empieza a las: {{ form.event_time}} </label>
                         <label class="col-span-6 sm:col-span-1 text-x font-bold">Permitir cometarios:{{ form.allow_comments }} </label>
                     </div>
                         
@@ -35,8 +36,8 @@
                             {{ form.content }}
                         </div> 
                     </div>
-                    <div class="p-6 border-t border-gray-200 rounded-b">
-                        <button class="p-2 flex items-center gap-x-1.5  bg-[var(--Mi-color4)] text-white font-medium rounded hover:bg-[var(--Mi-color5)]" type="submit">Publicar <span class="material-symbols-outlined">send</span></button>
+                    <div class="border-t border-gray-400 rounded-b">
+                        <button class="mt-5 p-2 flex items-center gap-x-1.5  bg-[var(--Mi-color4)] text-white font-medium rounded hover:bg-[var(--Mi-color5)]" type="submit">Publicar <span class="material-symbols-outlined">send</span></button>
                     </div>
                 </form>
                 

@@ -9,7 +9,7 @@
             <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-3" >
                 {% for post in  posts %}
             
-                    <div class=" bg-white shadow-gray-800 shadow-md rounded-lg p-5">
+                    <div class=" bg-white shadow-gray-800 shadow-md rounded-lg p-5 transition duration-300 hover:scale-105">
                         
                         <img class="object-cover object-center w-full mb-5 lg:h-48 md:h-36 rounded-xl" src="{{ post.cover_img.url }}" alt="Logo">
             
@@ -25,7 +25,11 @@
                             </div>
                             <div>
                                 <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Fecha del evento: </label>
-                                <label>{{ post.created_at }} </label>
+                                <label>{{ post.event_date }} </label>
+                            </div>
+                            <div>
+                                <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Hora de inicio: </label>
+                                <label>{{ post.event_time }} </label>
                             </div>
                             <div>
                                 <label class="h-24 font-bold mx-auto text-base leading-relaxed" >Hora: </label> 

@@ -41,7 +41,10 @@ class PostsModel(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     allow_comments = models.BooleanField(default=True)
-    fecha_evento = models.DateField(null=True, blank=True)
+    event_date = models.DateField(null=True, blank=True)
+    event_time = models.TimeField(
+        null=True, blank=True
+    )  # Columna para almacenar la hora
     localidad = models.CharField(
         max_length=100, choices=City.TITLE, blank=True, null=True
     )
