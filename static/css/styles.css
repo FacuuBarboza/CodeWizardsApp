@@ -2,11 +2,14 @@
 
 :root {
    --color-fondo-primario: #f1ffe7;
-   --color-fondo-secundario: #1a1b41;
+   --color-fondo-secundario: rgb(26, 27, 65);
    --color-fondo-terciario: #BAFF29;
    --color-input-bg: #6290c1;
    --color-input-placeholder: #4a6fa5;
+   --color-degradado: rgba(186, 255, 41, 0.3);
+   --color-degradados: rgb(26, 27, 65, 0.5);
    --color-link: #4a6fa5; 
+   --red: #ff4d4d;
    --font-primary: 'Sen', sans-serif;
    --border-radius: 8px;
    --espaciado-sm: 8px;

@@ -9,7 +9,7 @@ from django.db.models.signals import post_save
 
 @receiver(post_save, sender=User)
 def create_groups_and_permissions(sender, instance, created, **kwargs):
-    if created and instance.is_superuser and User.objects.filter(is_superuser=True).count() == 1:
+    if created and instance.is_superuser:
 
         try:
             post_content_type = ContentType.objects.get_for_model(Post)

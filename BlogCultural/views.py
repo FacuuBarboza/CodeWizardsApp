@@ -30,12 +30,12 @@ def home(request):
     
     if author:
         posts = posts.filter(author__username=author)
-        
+      
     if localidad:
         posts = posts.filter(localidad__icontains=localidad)
     
     if fecha:
-        posts = posts.filter(fecha_evento=fecha)
+        posts = posts.filter(event_date=fecha)
     
     # Anotar con conteos
     posts = posts.annotate(
@@ -55,8 +55,8 @@ def home(request):
     # Próximos eventos
     hoy = timezone.now().date()
     proximos_eventos = PostsModel.objects.filter(
-        fecha_evento__gte=hoy
-    ).order_by('fecha_evento')[:6]
+        event_date__gte=hoy
+    ).order_by('event_date')[:6]
     
     context = {
         'posts': posts_page,
@@ -77,17 +77,23 @@ def busqueda_views(request):
     return home(request)
 
 def lugares_view(request):
-    return render(request, 'lugares.html')
+    return render(request, "lugares.html")
 
-def eventos_view(request):
-    return render(request, "eventos.html")
+
 
 def historia_view(request):
     return render(request, "historia.html")
 
+
 def nosotros_view(request):
     return render(request, "nosotros.html")
+
 
 def evento_detail(request, id):
     evento = get_object_or_404(PostsModel, id=id)
     return render(request, "evento_detail.html", {"evento": evento})
+
+
+def miblog(request):
+    return render(request, "mi_blog.html")
+

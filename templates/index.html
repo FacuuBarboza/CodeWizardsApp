@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block contenido %} 
+{% block contenido %}
 <section class="relative h-[400px] flex flex-col items-center justify-center text-center text-white overflow-hidden">
     <img src="{% static 'img/portada2.jpg' %}" alt="Vista nocturna de Chaco"
          class="absolute top-0 left-0 w-full h-full object-cover z-0">
@@ -20,7 +20,7 @@
     <div class="relative w-full md:w-1/3">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
             </svg>
         </div>
@@ -28,7 +28,7 @@
                class="block w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700"
                value="{{ query }}">
     </div>
-    
+
     <!-- Filtro por categoría -->
     <select name="category" class="w-full md:w-1/4 px-3 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700">
         <option value="">Todas las categorías</option>
@@ -46,17 +46,17 @@
     </select>
 
     <!-- Filtro por fecha -->
-    <input type="date" name="fecha" 
+    <input type="date" name="fecha"
            class="w-full md:w-1/4 px-3 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-gray-700"
            value="{{ fecha }}">
 
     <!-- Botones -->
     <div class="flex gap-2">
-        <button type="submit" class="bg-blue-500 text-white px-5 py-3 rounded-lg hover:bg-blue-600 shadow-sm transition-colors">
-            🔍 Filtrar
+        <button type="submit" class="bg-[var(--color-fondo-terciario)] text-[var(--color-letras)] px-5 py-3 rounded-lg hover:bg-[var(--color-degradado)] shadow-sm transition-colors">
+            <span class="material-symbols-outlined">search</span> Filtrar
         </button>
-        <a href="{% url 'inicio' %}" class="bg-gray-500 text-white px-5 py-3 rounded-lg hover:bg-gray-600 shadow-sm transition-colors">
-            🗑️ Limpiar
+        <a href="{% url 'inicio' %}" class="bg-[var(--color-fondo-secundario)] text-[var(--color-fondo-primario)] px-5 py-3 rounded-lg hover:bg-[var(--color-degradados)] shadow-sm transition-colors">
+            <span class="material-symbols-outlined">delete</span> Limpiar
         </a>
     </div>
 </form>
@@ -98,4 +98,3 @@
 {% include "posts/posts_lists.html" %}
 
 {% endblock %}
-

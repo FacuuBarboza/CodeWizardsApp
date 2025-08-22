@@ -5,27 +5,30 @@ import uuid
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
+
 class Category:
     TITLE = {
-        "1": "Deporte",
-        "2": "Noticias",
-        "3": "Aviso",
-        "4": "Religion",
-        "5": "Fiesta",
-        "6": "Invitacion",
-        "7": "Otros",
+        "Deposte": "Deporte",
+        "Noticias": "Noticias",
+        "Aviso": "Aviso",
+        "Reqligion": "Religion",
+        "Fiestas": "Fiesta",
+        "Invitacion": "Invitacio",
+        "Otros": "Otros",
     }
+
 
 class City:
     TITLE = {
-        "1": "Resistencia",
-        "2": "Fontana",
-        "3": "Saens Peña",
-        "4": "Quitilipi",
-        "5": "Villa Berthet",
-        "6": "Samuhu",
-        "7": "Otros",
+        "Resistencia": "Resistencia",
+        "Fontana": "Fontana",
+        "Saenz Peña": "Saens Peña",
+        "Quitilipi": "Quitilipi",
+        "Villa Berthet": "Villa Berthet",
+        "Samuhu": "Samuhu",
+        "Otros": "Otros",
     }
+
 
 class PostsModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -38,16 +41,21 @@ class PostsModel(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     allow_comments = models.BooleanField(default=True)
-    fecha_evento = models.DateField(null=True, blank=True)  
-    localidad = models.CharField(max_length=100, blank=True, null=True)  
+    event_date = models.DateField(null=True, blank=True)
+    event_time = models.TimeField(
+        null=True, blank=True
+    )  # Columna para almacenar la hora
+    localidad = models.CharField(
+        max_length=100, choices=City.TITLE, blank=True, null=True
+    )
     cover_img = models.ImageField(default="cover/cover_default.jpg", upload_to="cover/")
 
     def __str__(self):
         return self.title
-    
+
     def likes_count(self):
         return self.likes.count()
-    
+
     def user_has_liked(self, user):
         if user.is_authenticated:
             return self.likes.filter(user=user).exists()
@@ -62,10 +70,10 @@ class PostLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey('PostsModel', on_delete=models.CASCADE, related_name='likes')
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         unique_together = ('user', 'post')
-        
+
     def __str__(self):
         return f'{self.user.username} likes {self.post.title}'
 

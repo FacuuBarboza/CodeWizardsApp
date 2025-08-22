@@ -1,37 +1,186 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block title %}Crear Post - Blog Cultural{% endblock %}
 
 {% block contenido %}
+<section class="min-h-screen bg-gradient-to-br from-[var(--Mi-color3)] to-white py-8">
+    <div class="max-w-6xl mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-[var(--Mi-color4)] mb-2">
+                <span class="material-symbols-outlined">post_add</span> Crear Nueva Publicación
+            </h1>
+            <p class="text-gray-600">Comparte tu evento cultural con la comunidad</p>
+        </div>
 
-    <section>
-        <h1><strong>Crear un post</strong></h1>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="container-form">
-                <aside class="form-options">
-                    <label class="label-options"> <strong>Autor:</strong> {{ form.author }}</label> 
-                    <label class="label-options"><strong>Categoria:</strong> {{ form.category }}</label>
-                    <label class="label-options"><strong>Ciudad:</strong> {{ form.city }}</label>
-                    <label class="label-options"> <strong>Permitir cometarios: </strong>{{ form.allow_comments }} </label>
-                </aside>
-
-                <div class="form-info">
-                    <label class="label-options">Imagen de portada: {{ form.cover_img }} </label>
+        <!-- Formulario -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
                 
-                    <label>Titulo</label>
-                    {{ form.title }}
-                    
-                    <label>Slug</label>
-                    {{ form.slug }}
-                    
-                    <label>Contenido</label>
-                    {{ form.content }}
-                    
+                <!-- Header del formulario -->
+                <div class="bg-gradient-to-r from-[var(--Mi-color)] to-[var(--Mi-color4)] px-8 py-6">
+                    <h2 class="text-2xl font-bold text-white mb-4"><span class="material-symbols-outlined">event</span> Información del Evento</h2>
+
+                    <!-- Grid de campos básicos -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="form-group">
+                            <label class="block text-white font-semibold mb-2">
+                                <span class="material-symbols-outlined">person</span> Autor
+                            </label>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-2">
+                                {{ form.author }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="block text-white font-semibold mb-2">
+                                <span class="material-symbols-outlined">label</span> Categoría
+                            </label>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-2">
+                                {{ form.category }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="block text-white font-semibold mb-2">
+                                <span class="material-symbols-outlined">location_city</span> Ciudad
+                            </label>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-2">
+                                {{ form.localidad }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="block text-white font-semibold mb-2">
+                                <span class="material-symbols-outlined">event</span> Fecha del Evento
+                            </label>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-2">
+                                {{ form.event_date }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="block text-white font-semibold mb-2">
+                                <span class="material-symbols-outlined">schedule</span> Hora de Inicio
+                            </label>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-2">
+                                {{ form.event_time }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group flex items-center">
+                            <label class="flex items-center text-white font-semibold">
+                                {{ form.allow_comments }}
+                                <span class="ml-2 material-symbols-outlined">comment</span> Permitir Comentarios
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
-                <button type="submit">Guardar</button>
-            </div>
+                <!-- Contenido principal -->
+                <div class="px-8 pb-8 space-y-6">
+                    <!-- Imagen de portada -->
+                    <div class="form-group">
+                        <label class="block text-[var(--Mi-color4)] font-bold text-lg mb-3">
+                            <span class="material-symbols-outlined">image</span> Imagen de Portada
+                        </label>
+                        <div class="border-2 border-dashed border-[var(--Mi-color)] rounded-lg p-6 text-center bg-gradient-to-br from-[var(--Mi-color2)] to-white hover:from-[var(--Mi-color)] hover:to-[var(--Mi-color2)] transition-all duration-300">
+                            <div class="text-4xl mb-2"><span class="material-symbols-outlined">photo_camera</span></div>
+                            {{ form.cover_img }}
+                            <p class="text-sm text-gray-600 mt-2">Selecciona una imagen atractiva para tu evento</p>
+                        </div>
+                    </div>
 
-        </form>
-    </section
+                    <!-- Título y Slug -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label class="block text-[var(--Mi-color4)] font-bold text-lg mb-3">
+                                <span class="material-symbols-outlined">titlecase</span> Título del Evento
+                            </label>
+                            <div class="relative">
+                                {{ form.title }}
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 material-symbols-outlined">edit_note</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="block text-[var(--Mi-color4)] font-bold text-lg mb-3">
+                                <span class="material-symbols-outlined">link</span> URL Personalizada (Slug)
+                            </label>
+                            <div class="relative">
+                                {{ form.slug }}
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 material-symbols-outlined">language</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="form-group">
+                        <label class="block text-[var(--Mi-color4)] font-bold text-lg mb-3">
+                            <span class="material-symbols-outlined">description</span> Descripción del Evento
+                        </label>
+                        <div class="relative">
+                            {{ form.content }}
+                            <p class="text-sm text-gray-600 mt-2">
+                                Describe tu evento cultural de manera detallada. Incluye información sobre actividades, horarios, precios, etc.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Botón de envío -->
+                    <div class="flex justify-center pt-6 border-t border-gray-200">
+                        <button type="submit" 
+                                class="group relative inline-flex items-center px-8 py-4 bg-[var(--color-fondo-secundario)] text-[var(--color-fondo-primario)] font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                            <span class="mr-3 material-symbols-outlined">rocket_launch</span>
+                            Publicar Evento
+                            <span class="ml-3 group-hover:translate-x-1 transition-transform duration-300">→</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--Mi-color);
+    box-shadow: 0 0 0 3px rgba(98, 144, 195, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+input[type="file"] {
+    background: white;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+input[type="checkbox"] {
+    width: auto !important;
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+</style>
 {% endblock %}

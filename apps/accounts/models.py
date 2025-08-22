@@ -23,6 +23,12 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
     
+
+    def is_admin_or_collaborator(self):
+        # Este método comprueba si el usuario es superusuario o si pertenece a los grupos
+        return self.is_superuser or self.groups.filter(name__in=['Admins', 'Collaborators']).exists()
+    
+    
     @property
     def is_registered(self):
         return self.groups.filter(name='Registered').exists()

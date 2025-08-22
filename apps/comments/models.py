@@ -12,8 +12,10 @@ class CommentsModel(models.Model):
         PostsModel, related_name="comments", on_delete=models.CASCADE
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField(max_length=200)
+    content = models.TextField(max_length=205)
     created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_edited = models.BooleanField(default=False)
     likes_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
@@ -23,7 +25,7 @@ class CommentLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.ForeignKey(CommentsModel, on_delete=models.CASCADE, related_name='likes')
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         unique_together = ('user', 'comment')
 

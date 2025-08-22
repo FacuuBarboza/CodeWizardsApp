@@ -1,28 +1,239 @@
 {% extends "base.html" %}
+{% load static %}
+{% load permissions %}
+
+{% block title %}{{ post.title }} - Blog Cultural{% endblock %}
+
 {% block contenido %}
+<article class="min-h-screen bg-gradient-to-br from-[var(--Mi-color3)] to-white">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent z-10"></div>
+        
+        <!-- Imagen de portada -->
+        <div class="relative h-96 md:h-[500px] overflow-hidden">
+            {% if post.cover_img %}
+            <img class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" 
+                 src="{{ post.cover_img.url }}" 
+                 alt="{{ post.title }}">
+            {% else %}
+            <div class="w-full h-full bg-gradient-to-br from-[var(--Mi-color)] to-[var(--Mi-color4)] flex items-center justify-center">
+                <div class="text-center text-white">
+                    <div class="text-6xl mb-4">🎭</div>
+                    <p class="text-xl font-semibold">Evento Cultural</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Título superpuesto -->
+        <div class="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black/80 to-transparent p-8">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                    {{ post.title }}
+                </h1>
+                <div class="flex flex-wrap items-center gap-4 text-white/90">
+                    <div class="flex items-center">
+                        <span class="mr-2 material-symbols-outlined">person</span>
+                        <span class="font-semibold">{{ post.author.username }}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="mr-2 material-symbols-outlined">event</span>
+                        <span>{{ post.created_at|date:"d/m/Y" }}</span>
+                    </div>
+                    {% if post.category %}
+                    <div class="flex items-center">
+                        <span class="mr-2 material-symbols-outlined">label</span>
+                        <span class="bg-[var(--color-fondo-secundario)] px-3 py-1 rounded-full text-sm font-semibold">
+                            {{ post.category }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="post-container">
-    <div class="post-cover-container">
-        <img class="post-cover" src="{{ post.cover_img.url }}" alt="Imagen de portada">
-        <h1 class="post-title">{{ post.title }}</h1>
-    </div>
-    
-    <div class="post-meta">
-        <p><strong>Autor:</strong> {{ post.author.username }}</p>
-        <p><strong>Fecha:</strong> {{ post.created_at|date:"d/m/Y" }}</p>
-        {% if post.category %}
-            <p><strong>Categoría:</strong> {{ post.category }}</p>
-        {% endif %}
-    </div>
-    
-    <div class="post-content">
-        {{ post.content|linebreaks }}
-    </div>
-</div>
+    <!-- Contenido principal -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Contenido del post -->
+            <div class="lg:col-span-2">
+                <!-- Información del evento -->
+                {% if post.event_date or post.event_time or post.city %}
+                <div class="bg-gradient-to-r from-[var(--Mi-color2)] to-[var(--Mi-color3)] rounded-2xl p-6 mb-8 shadow-lg">
+                    <h2 class="text-2xl font-bold text-[var(--Mi-color4)] mb-4 flex items-center">
+                        <span class="mr-3 material-symbols-outlined">location_on</span>
+                        Información del Evento
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {% if post.event_date %}
+                        <div class="flex items-center bg-white rounded-lg p-4 shadow-sm">
+                            <span class="text-2xl mr-3 material-symbols-outlined">event</span>
+                            <div>
+                                <p class="text-sm text-gray-600">Fecha</p>
+                                <p class="font-semibold text-[var(--Mi-color4)]">{{ post.event_date|date:"d/m/Y" }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if post.event_time %}
+                        <div class="flex items-center bg-white rounded-lg p-4 shadow-sm">
+                            <span class="text-2xl mr-3 material-symbols-outlined">watch</span>
+                            <div>
+                                <p class="text-sm text-gray-600">Hora</p>
+                                <p class="font-semibold text-[var(--Mi-color4)]">{{ post.event_time }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if post.city %}
+                        <div class="flex items-center bg-white rounded-lg p-4 shadow-sm">
+                            <span class="text-2xl mr-3 material-symbols-outlined">location_city</span>
+                            <div>
+                                <p class="text-sm text-gray-600">Ciudad</p>
+                                <p class="font-semibold text-[var(--Mi-color4)]">{{ post.localidad }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
 
-<!-- Ancla para scroll después de comentar -->
-<div id="comments-section">
-    {% include "posts/comments.html" with comments=comments form=form %}
-</div>
+                <!-- Contenido del post -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                    <div class="prose prose-lg max-w-none">
+                        <div class="text-gray-700 leading-relaxed text-lg">
+                            {{ post.content|linebreaks }}
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Acciones del post (para el autor) -->
+                {% if user|can_manage_post:post %}
+                <div class=" border border-green-200 rounded-2xl p-6 mb-8" style="background-color: rgba(186, 255, 41, 0.3)">
+                    <h3 class="font-bold text-blue-800 mb-4 flex items-center">
+                        <span class="mr-2 material-symbols-outlined">settings</span>
+                        Gestionar Publicación
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="{% url 'posts:posts_edit' post.slug %}" 
+                           class="inline-flex items-center px-4 py-2 bg-[var(--color-fondo-terciario)] text-[var(--color-letras)] font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <span class="mr-2 material-symbols-outlined">edit</span>
+                            Editar
+                        </a>
+                        <a href="{% url 'posts:posts_del' post.slug %}" 
+                           class="inline-flex items-center px-4 py-2 bg-[var(--color-fondo-secundario)] text-[var(--color-fondo-primario)] font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <span class="mr-2 material-symbols-outlined">delete</span>
+                            Eliminar
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Información del autor -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 sticky top-4">
+                    <h3 class="font-bold text-[var(--Mi-color4)] mb-4 flex items-center">
+                        <span class="mr-2 material-symbols-outlined">person</span>
+                        Sobre el Autor
+                    </h3>
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-[var(--color-fondo-secundario)] text-[var(--color-fondo-primario)] rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
+                            {{ post.author.username|first|upper }}
+                        </div>
+                        <h4 class="font-bold text-lg text-[var(--Mi-color4)] mb-2">{{ post.author.username }}</h4>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Miembro desde {{ post.author.date_joined|date:"M Y" }}
+                        </p>
+                        {% if post.author.first_name %}
+                        <p class="text-gray-700">{{ post.author.first_name }} {{ post.author.last_name }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Estadísticas del post -->
+                <div class="bg-gradient-to-br from-[var(--Mi-color2)] to-[var(--Mi-color3)] rounded-2xl p-6 shadow-lg">
+                    <h3 class="font-bold text-[var(--Mi-color4)] mb-4 flex items-center">
+                        <span class="mr-2 material-symbols-outlined">bar_chart</span>
+                        Estadísticas
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700 flex items-center">
+                                <span class="mr-2 material-symbols-outlined">comment</span>
+                                Comentarios
+                            </span>
+                            <span class="font-bold text-[var(--Mi-color4)]">{{ post.comments.count }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700 flex items-center">
+                                <span class="mr-2 material-symbols-outlined">event</span>
+                                Publicado
+                            </span>
+                            <span class="font-bold text-[var(--Mi-color4)]">{{ post.created_at|date:"d/m/Y" }}</span>
+                        </div>
+                        {% if post.updated_at != post.created_at %}
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700 flex items-center">
+                                <span class="mr-2 material-symbols-outlined">edit</span>
+                                Actualizado
+                            </span>
+                            <span class="font-bold text-[var(--Mi-color4)]">{{ post.updated_at|date:"d/m/Y" }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de comentarios -->
+    <section class="max-w-6xl mx-auto px-4 pb-12" id="comments-section">
+        {% include "posts/comments.html" with comments=comments form=form %}
+    </section>
+</article>
+
+<style>
+.prose p {
+    margin-bottom: 1.5em;
+}
+
+.prose h1, .prose h2, .prose h3 {
+    color: var(--Mi-color4);
+    font-weight: bold;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.prose blockquote {
+    border-left: 4px solid var(--Mi-color);
+    padding-left: 1rem;
+    font-style: italic;
+    background: var(--Mi-color3);
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+}
+
+.prose img {
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    margin: 2rem auto;
+}
+
+.prose ul, .prose ol {
+    margin: 1.5em 0;
+    padding-left: 2em;
+}
+
+.prose li {
+    margin-bottom: 0.5em;
+}
+
+@media (max-width: 768px) {
+    .prose {
+        font-size: 16px;
+    }
+}
+</style>
 {% endblock %}
