@@ -4,7 +4,23 @@
 
 ## Blog Cultural - Informatorio 2025
 
-	Proyecto llevado a cabo por el grupo CodeWizardsApp
+	Proyecto llevado a cabo por el grupo 3: CodeWizardsApp
+ 	Conformado por:
+  		- ADRIAN FALCON
+		- DEBORA FRANCO
+  		- FACUNDO BARBOZA
+  	
+  	Usuarios para probar en el deploy:
+  	
+|user|contraseña  |rol|
+|--|--|--|
+|admin  |rootcultural  | superuser|
+|pepito | pepitocultural | registered|
+|jose_colab| josesitocultural| collaborator|
+
+Pagína web del Blog Cultural del chaco: [Página de Inicio](https://facubarboza.pythonanywhere.com/)
+
+
 
 ## Prerrequisitos
 
@@ -197,5 +213,6 @@ CodeWizardsApp/
 ├── .gitignore
 └── manage.py
 ```
+
 
 
